@@ -1,14 +1,14 @@
 package utils;
 
-public class Map {
+public final class Map {
     private LandType[][] landTypes;
-    private static final Map map = new Map();
+    private static final Map MAP = new Map();
 
     private Map() {
         landTypes = new LandType[0][0];
     }
 
-    public void createMap(String[] land, int n, int m) {
+    public void createMap(final String[] land, final int n, final int m) {
         landTypes = new LandType[n + 1][m + 1];
 
         for (int i = 0; i < n; ++i) {
@@ -33,15 +33,15 @@ public class Map {
         }
     }
 
-    public LandType getLandType(int n, int m) {
+    public LandType getLandType(final int n, final int m) {
         return landTypes[n][m];
     }
 
     public static Map getInstance() {
-        if (map == null) {
+        if (MAP == null) {
             new Map();
         }
 
-        return map;
+        return MAP;
     }
 }
