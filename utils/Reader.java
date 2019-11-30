@@ -9,7 +9,6 @@ import java.io.IOException;
  * It only implements parsing for Strings and Ints.
  */
 public final class Reader {
-    private static Constants c = new Constants();
     private final int shifter = 17;
     private final int zero = 0;
     private final int minus1 = -1;
@@ -70,7 +69,7 @@ public final class Reader {
             chr = read();
         }
         while (chr >= '0' && chr <= '9') {
-            ret = (ret << three ) + (ret << one) + chr - '0';
+            ret = (ret << three) + (ret << one) + chr - '0';
             chr = read();
         }
 
