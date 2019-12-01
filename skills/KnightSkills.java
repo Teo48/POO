@@ -1,9 +1,14 @@
 package skills;
 
-import players.*;
+import players.Hero;
+import players.Knight;
+import players.Pyromancer;
+import players.Wizard;
+import players.Rogue;
 import skills.KnightSkillsConstants.ExecuteConstants;
 import skills.KnightSkillsConstants.PlayersModifiers;
 import skills.KnightSkillsConstants.SlamConstants;
+import skills.WizardSkillsConstants.DrainConstants;
 import utils.LandModifiers;
 import utils.LandType;
 import utils.Map;
@@ -14,16 +19,25 @@ public class KnightSkills implements SkillsVisitor {
     private int level;
     private Hero hero;
 
-    public KnightSkills(Hero hero) {
+    /**
+     * Constructor.
+     * @param hero -> A Knight.
+     * */
+    public KnightSkills(final Hero hero) {
         this.hero = hero;
         this.level = hero.getLevel();
     }
 
-    private float getHpLimit(Hero player) {
+    /**
+     * @param player
+     * @return float -> Player's hplimit for the execute spell.
+     * */
+    private float getHpLimit(final Hero player) {
         float hpLimit = ExecuteConstants.HP_MIN_LIMIT_COEF.getFloatNumber() * player.getMaxHp();
 
         if (ExecuteConstants.EXEC_MAX_DAMAGE_LEVEL.getNumber() > this.level) {
-            hpLimit += ((float) this.level / 100) * player.getMaxHpLevelUp();
+            hpLimit += ((float) this.level / DrainConstants.HUNDREAD.getNumber())
+                    * player.getMaxHpLevelUp();
 
             return hpLimit;
         }
@@ -31,6 +45,9 @@ public class KnightSkills implements SkillsVisitor {
         return hpLimit + ExecuteConstants.HP_MAX_LIMIT_COEF.getFloatNumber() * player.getMaxHp();
     }
 
+    /**
+     * @return ArrayList<Float> -> Basic damage from execute and slam.
+     * */
     private ArrayList<Float> getSpellsDamage() {
         ArrayList<Float> spells = new ArrayList<>();
         float executeDamage = ExecuteConstants.INIT_EXEC_DAMAGE.getNumber();
@@ -45,7 +62,14 @@ public class KnightSkills implements SkillsVisitor {
         return spells;
     }
 
-    private int getTotalDamage(Map map, float playerExecuteModifier, float playerSlamModifier) {
+    /**
+     * @param map
+     * @param playerExecuteModifier
+     * @param playerSlamModifier
+     * @return int -> total damage dealt by the Knight player.
+     * */
+    private int getTotalDamage(final Map map, final float playerExecuteModifier,
+                               final float playerSlamModifier) {
         ArrayList<Float> spells = getSpellsDamage();
         spells.set(0, spells.get(0) * playerExecuteModifier);
         spells.set(1, spells.get(1) * playerSlamModifier);
@@ -59,50 +83,69 @@ public class KnightSkills implements SkillsVisitor {
         return Math.round(totalDamage);
     }
 
-
+    /**
+     * Visit method for a Pyromancer. It also sets the number of stunned turns.
+     * @param player
+     * */
     @Override
-    public void visit(Pyromancer player) {
+    public void visit(final Pyromancer player) {
         Map map = Map.getInstance();
         if (player.getHp() > 0 && (float) player.getHp() < getHpLimit(player)) {
             player.getActiveDamage(player.getHp());
         } else {
-            player.getActiveDamage(getTotalDamage(map, PlayersModifiers.PYRO_EXECUTE_MODIFIER.getNumber(),
+            player.getActiveDamage(getTotalDamage(map,
+                    PlayersModifiers.PYRO_EXECUTE_MODIFIER.getNumber(),
                     PlayersModifiers.PYRO_SLAM_MODIFIER.getNumber()));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
     }
 
+    /**
+     * Visit method for a Knight. It also sets the number of stunned turns.
+     * @param player
+     * */
     @Override
-    public void visit(Knight player) {
+    public void visit(final Knight player) {
         Map map = Map.getInstance();
         if (player.getHp() > 0 && (float) player.getHp() < getHpLimit(player)) {
             player.getActiveDamage(player.getHp());
         } else {
-            player.getActiveDamage(getTotalDamage(map, PlayersModifiers.KNIGHT_EXECUTE_MODIFIER.getNumber(),
+            player.getActiveDamage(getTotalDamage(map,
+                    PlayersModifiers.KNIGHT_EXECUTE_MODIFIER.getNumber(),
                     PlayersModifiers.KNIGHT_SLAM_MODIFIER.getNumber()));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
     }
 
+    /**
+     * Visit method for a Rogue. It also sets the number of stunned turns.
+     * @param player
+     * */
     @Override
-    public void visit(Rogue player) {
+    public void visit(final Rogue player) {
         Map map = Map.getInstance();
         if (player.getHp() > 0 && (float) player.getHp() < getHpLimit(player)) {
             player.getActiveDamage(player.getHp());
         } else {
-            player.getActiveDamage(getTotalDamage(map, PlayersModifiers.ROGUE_EXECUTE_MODIFIER.getNumber(),
+            player.getActiveDamage(getTotalDamage(map,
+                    PlayersModifiers.ROGUE_EXECUTE_MODIFIER.getNumber(),
                     PlayersModifiers.ROGUE_SLAM_MODIFIER.getNumber()));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
     }
 
+    /**
+     * Visit method for a Wizard. It also sets the number of stunned turns.
+     * @param player
+     * */
     @Override
-    public void visit(Wizard player) {
+    public void visit(final Wizard player) {
         Map map = Map.getInstance();
         if (player.getHp() > 0 && (float) player.getHp() < getHpLimit(player)) {
             player.getActiveDamage(player.getHp());
         } else {
-            player.getActiveDamage(getTotalDamage(map, PlayersModifiers.WIZARD_EXECUTE_MODIFIER.getNumber(),
+            player.getActiveDamage(getTotalDamage(map,
+                    PlayersModifiers.WIZARD_EXECUTE_MODIFIER.getNumber(),
                     PlayersModifiers.WIZARD_SLAM_MODIFIER.getNumber()));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
