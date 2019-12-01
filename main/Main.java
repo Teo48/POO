@@ -17,6 +17,10 @@ public final class Main {
     private Main() {
     }
 
+    /**
+     * Reads the input data from args[0] using an instance of Reader.
+     * Creats an array of heroes and then the game starts.
+     * */
     public static void main(final String[] args) throws IOException, InvalidMoveException {
         int n, m;
         Reader reader = new Reader(args[0]);
@@ -107,14 +111,28 @@ public final class Main {
         for (Hero h : heroes) {
             printStream.println(h);
         }
+
+        printStream.close();
     }
 
-    public static void fight(final ArrayList<Hero> heroes, final int j, final int k) {
+    /**
+     * Method used for the fight between two players.
+     * @param heroes
+     * @param j
+     * @param k
+     * */
+    private static void fight(final ArrayList<Hero> heroes, final int j, final int k) {
         heroes.get(k).accept(heroes.get(j).heroSkill());
         heroes.get(j).accept(heroes.get(k).heroSkill());
     }
 
-    public static void gainPoints(final ArrayList<Hero> heroes, final int j, final int k) {
+    /**
+     * Method used for xp gaining for the winning player.
+     * @param heroes
+     * @param j
+     * @param k
+     * */
+    private static void gainPoints(final ArrayList<Hero> heroes, final int j, final int k) {
         if (!heroes.get(j).isDead() && heroes.get(k).isDead()) {
             heroes.get(j).gainXp(heroes.get(k).getLevel());
         }
