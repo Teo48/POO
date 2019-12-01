@@ -14,7 +14,7 @@ import utils.Map;
 
 import java.util.ArrayList;
 
-public class PyromancerSkills implements AttackVisitor {
+public class PyromancerSkills implements SkillsVisitor {
     private int level;
     private Hero hero;
 

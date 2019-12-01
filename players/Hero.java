@@ -1,5 +1,5 @@
 package players;
-import skills.AttackVisitor;
+import skills.SkillsVisitor;
 import utils.Coordinates;
 
 public abstract class Hero {
@@ -125,8 +125,8 @@ public abstract class Hero {
         return xp;
     }
 
-    public abstract void accept(AttackVisitor skill);
-    public abstract AttackVisitor heroSkill();
+    public abstract void accept(SkillsVisitor skill);
+    public abstract SkillsVisitor heroSkill();
 
     /**
      * @return String -> It has the following format:

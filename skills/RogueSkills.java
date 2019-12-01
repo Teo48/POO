@@ -10,7 +10,7 @@ import utils.Map;
 
 import java.util.ArrayList;
 
-public class RogueSkills implements AttackVisitor {
+public class RogueSkills implements SkillsVisitor {
     private int level;
     private int backstabCounter;
     private Hero hero;

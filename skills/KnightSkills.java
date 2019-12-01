@@ -10,7 +10,7 @@ import utils.Map;
 
 import java.util.ArrayList;
 
-public class KnightSkills implements AttackVisitor {
+public class KnightSkills implements SkillsVisitor {
     private int level;
     private Hero hero;
 
