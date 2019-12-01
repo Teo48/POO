@@ -94,7 +94,7 @@ public final class Reader {
     /**
      * Method used for buffer traversal.
      *
-     * @return byte which represent the current character in the buffer
+     * @return byte which represents the current character in the buffer.
      */
     private byte read() throws IOException {
         if (bufferPointer == bytesRead) {
