@@ -1,28 +1,48 @@
 package players;
 
-import skills.AttackVisitor;
+import players.PlayersConstants.KnightConstants;
+import skills.SkillsVisitor;
 import skills.KnightSkills;
 import utils.Coordinates;
 
-public class Knight extends Hero {
-    public Knight(Coordinates c) {
+/**
+ * Class that implement the Knight player.
+ * */
+
+public final class Knight extends Hero {
+    /**
+     * Constructor.
+     * @param c -> Coorinates - player's position.
+     * It also initializes player's starting and max hp.
+     * */
+    public Knight(final Coordinates c) {
         super(c);
-        this.setHp(900);
-        this.setMaxHp(900);
+        this.setHp(KnightConstants.KNIGHT_STARTING_HP.getNumber());
+        this.setMaxHp(KnightConstants.KNIGHT_STARTING_HP.getNumber());
     }
 
+    /**
+     * @return int -> Player's max hp after leveling up.
+     * */
     @Override
     public int getMaxHpLevelUp() {
-        return 900 + 80 * this.getLevel();
+        return KnightConstants.KNIGHT_STARTING_HP.getNumber()
+                + KnightConstants.KNIGHT_HP_PER_LEVEL.getNumber() * this.getLevel();
     }
 
+    /**
+     * @param skill -> Visit accept method.
+     * */
     @Override
-    public void accept(AttackVisitor skill) {
+    public void accept(final SkillsVisitor skill) {
         skill.visit(this);
     }
 
+    /**
+     * @return SkillsVisitor -> Visitor.
+     * */
     @Override
-    public AttackVisitor heroSkill() {
+    public SkillsVisitor heroSkill() {
         return new KnightSkills(this);
     }
 }

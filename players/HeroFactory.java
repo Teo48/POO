@@ -1,9 +1,15 @@
 package players;
 
+import exceptions.InvalidPlayerException;
 import utils.Coordinates;
 
+/**
+ * Class that implements a factory for players.
+ * */
+
 public abstract class HeroFactory {
-    public static Hero getHeroes(final String name, final Coordinates c) {
+    public static Hero getHeroes(final String name, final Coordinates c)
+            throws InvalidPlayerException {
         switch (name) {
             case "P":
                 return new Pyromancer(c);
@@ -14,7 +20,7 @@ public abstract class HeroFactory {
             case "W":
                 return new Wizard(c);
             default:
-                throw new IllegalArgumentException("Invalid player");
+                throw new InvalidPlayerException("Invalid hero!");
         }
     }
 }

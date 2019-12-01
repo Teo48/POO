@@ -1,26 +1,47 @@
 package players;
 
+import players.PlayersConstants.WizardConstants;
 import skills.SkillsVisitor;
 import skills.WizardSkills;
 import utils.Coordinates;
 
-public class Wizard extends Hero {
-    public Wizard(Coordinates c) {
+/**
+ * Class that implement the Wizard player.
+ * */
+
+
+public final class Wizard extends Hero {
+    /**
+     * Constructor.
+     * @param c -> Coorinates - player's position.
+     * It also initializes player's starting and max hp.
+     * */
+    public Wizard(final Coordinates c) {
         super(c);
-        this.setHp(400);
-        this.setMaxHp(400);
+        this.setHp(WizardConstants.WIZARD_STARTING_HP.getNumber());
+        this.setMaxHp(WizardConstants.WIZARD_STARTING_HP.getNumber());
     }
 
+    /**
+     * @return int -> Player's max hp after leveling up.
+     * */
     @Override
     public int getMaxHpLevelUp() {
-        return 400 + this.getLevel() * 30;
+        return WizardConstants.WIZARD_STARTING_HP.getNumber()
+                + WizardConstants.WIZARD_HP_PER_LEVEL.getNumber() * this.getLevel();
     }
 
+    /**
+     * @param skill -> Visit accept method.
+     * */
     @Override
-    public void accept(SkillsVisitor skill) {
+    public void accept(final SkillsVisitor skill) {
         skill.visit(this);
     }
 
+    /**
+     * @return SkillsVisitor -> Visitor.
+     * */
     @Override
     public SkillsVisitor heroSkill() {
         return new WizardSkills(this);
