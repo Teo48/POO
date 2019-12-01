@@ -6,7 +6,7 @@ import skills.RogueSkills;
 import utils.Coordinates;
 
 /**
- * Class that implement the Rogue player.
+ * Class that implements the Rogue player.
  * */
 
 

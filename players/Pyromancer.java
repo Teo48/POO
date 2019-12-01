@@ -6,7 +6,7 @@ import skills.PyromancerSkills;
 import utils.Coordinates;
 
 /**
- * Class that implement the Pyromancer player.
+ * Class that implements the Pyromancer player.
  * */
 
 public final class Pyromancer extends Hero {

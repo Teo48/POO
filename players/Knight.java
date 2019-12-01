@@ -6,7 +6,7 @@ import skills.KnightSkills;
 import utils.Coordinates;
 
 /**
- * Class that implement the Knight player.
+ * Class that implements the Knight player.
  * */
 
 public final class Knight extends Hero {

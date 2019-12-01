@@ -6,7 +6,7 @@ import skills.WizardSkills;
 import utils.Coordinates;
 
 /**
- * Class that implement the Wizard player.
+ * Class that implements the Wizard player.
  * */
 
 
