@@ -2,6 +2,10 @@ package players;
 import skills.SkillsVisitor;
 import utils.Coordinates;
 
+/**
+ * Abstract class to define a Hero.
+ * */
+
 public abstract class Hero {
     private Coordinates coordinates;
     private int xp;
@@ -14,6 +18,10 @@ public abstract class Hero {
     private int passiveCounter = 0;
     private boolean isDead;
 
+    /**
+     * Constructor.
+     * @param c -> Coordinates - player's position.
+     * */
     public Hero(final Coordinates c) {
         this.coordinates = c;
         this.isDead = false;
@@ -23,6 +31,11 @@ public abstract class Hero {
         this.passiveDamage = 0;
     }
 
+    /**
+     * Move method.
+     * @param dx -> direction on x axis.
+     * @param dy -> direction on y axis.
+     * */
     public final void move(final int dx, final int dy) {
         if (isDead || stunnedTurns > 0) {
             --stunnedTurns;
@@ -33,6 +46,10 @@ public abstract class Hero {
         coordinates.setY(coordinates.getY() + dy);
     }
 
+    /**
+     * Gain XP method.
+     * @param enemyLevel -> enemy's level.
+     * */
     public final void gainXp(final int enemyLevel) {
         this.xp += Math.max(0, HeroConstants.BASE_XP_GAIN.getNumber() - (this.level
             - enemyLevel) * (HeroConstants.GAIN_XP_PER_LEVEL.getNumber()));
@@ -45,17 +62,13 @@ public abstract class Hero {
     }
 
     public final void getPassiveDamage() {
-        if (!this.isDead) {
-            if (this.passiveCounter != 0) {
+        if (!this.isDead && this.passiveCounter != 0) {
                 this.hp -= this.passiveDamage;
-
                 if (this.hp <= 0) {
                     this.isDead = true;
                     return;
                 }
                 --this.passiveCounter;
-            }
-
         }
     }
 
@@ -72,6 +85,7 @@ public abstract class Hero {
     }
 
     /**
+     * This method will be overriden.
      * @return int -> Maximum hp that a player has after leveling-up.
      * */
     public int getMaxHpLevelUp() {
@@ -79,6 +93,7 @@ public abstract class Hero {
     }
 
     /**
+     * This method will be overriden.
      * @return int -> Maximum hp that a player has.
      * */
     public int getMaxHp() {
@@ -125,7 +140,15 @@ public abstract class Hero {
         return xp;
     }
 
+    /**
+     *Accept method.
+     * @param skill -> Visit accept method.
+    */
     public abstract void accept(SkillsVisitor skill);
+
+    /**
+     * @return SkillsVisitor -> Visitor.
+     * */
     public abstract SkillsVisitor heroSkill();
 
     /**
@@ -148,6 +171,5 @@ public abstract class Hero {
 
         return stringBuilder.toString();
     }
-
-
 }
+
