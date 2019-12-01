@@ -61,11 +61,11 @@ utils
 	|_Reader
 
 
-*exceptions package*
+~~exceptions package~~
 --------------------
 - Some exceptions that could occur during the game.
 
-*main package*
+~~main package~~
 --------------
  - Main
    Class that implements the game logic. Here we read the data from the input
@@ -74,18 +74,18 @@ utils
    The methods that actually executes the game is implemented here alongside
    the ones used for players' fights.
 
-*players package*
+~~players package~~
 -----------------
  - Some enums with needed constants.
  - HeroFactory
  	- Implementation of factory pattern for the players.
  - Class that describes a Hero from which the other 4 are going to be extended.
 
-*skills package*
+~~skills package~~
  - Some enums with needed constants.
  - Implementations of the skills each type of hero has using visitor pattern.
 
-*utils_package*
+~~utils_package~~
  - Reader
    Class that implements methods for fast input parsing.
    It only implements parsing methods for Integers and Strings.
@@ -95,3 +95,7 @@ utils
  
  - Coordinates
    Class that implements a pair of coordinates.
+
+~~FEEDBACK~~
+An interesting homework that helped me to improve my git usage skills.
+May the force be with you! 
