@@ -30,6 +30,11 @@ public final class RogueSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to determine the damage caused by backstab and paralysis(including passive,
+     * the number of stunned turns and the critical hit from backstab).
+     * If the current round number is a multiple of 3 and the player is on a WOODS land we amplify
+     * the backstab damage with the critical hit value. Also, if the player is on a WOODS land we
+     * incresea the number of stunned turns.
      * @return ArrayList<Float> -> Basic damage from backstab and paralysis(including
      * passive damage and the number of stunned turns).
      * */
@@ -66,6 +71,7 @@ public final class RogueSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to amplify the damage of backstab and paralysis.
      * @param map
      * @param player
      * @param playerBackstabModifier
@@ -89,6 +95,7 @@ public final class RogueSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to amplify the damage of Fireblast and Ignite if ROGUE is on a WOODS land.
      * @param map
      * @param player
      * @param spells
@@ -108,7 +115,8 @@ public final class RogueSkills implements SkillsVisitor {
     }
 
     /**
-     * Apply damage to a player.
+     * Method used to apply the active and passive damage.
+     * We also set the number of stunned turns.
      * @param player -> Current player.
      * @param activeDamageValue
      * @param passiveDamageValue
@@ -125,6 +133,7 @@ public final class RogueSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Pyromancer.
+     * We get the total damage and apply it to the enemy.
      * @param player
      * */
     @Override
@@ -138,6 +147,9 @@ public final class RogueSkills implements SkillsVisitor {
     }
     /**
      * Visit method for a Knight.
+     * We get the total damage and apply it to the enemy.
+     * Knight has a special interaction with Rogue so I had to round the value of each
+     * spell and then add it to the total damage to get the correct value.
      * @param player
      * */
     @Override
@@ -165,6 +177,7 @@ public final class RogueSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Rogue.
+     * We get the total damage and apply it to the enemy.
      * @param player
      * */
     @Override
@@ -179,6 +192,7 @@ public final class RogueSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Wizard.
+     * We get the total damage and apply it to the enemy.
      * @param player
      * */
     @Override

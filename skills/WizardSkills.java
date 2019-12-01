@@ -36,6 +36,9 @@ public final class WizardSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to get the drain damage.
+     * If the player is on a DESERT land we amplify amplify the drainProcent with
+     * the wizzard land modifier.
      * @param map
      * @param playerModifier
      * @param player
@@ -62,6 +65,9 @@ public final class WizardSkills implements SkillsVisitor {
 
 
     /**
+     * Method used to get the deflect damage.
+     *If the player is on a DESERT land we amplify amplify the drainProcent
+     * with the wizzard land modifier.
      * @param map
      * @param player
      * @param playerModifier
@@ -88,6 +94,8 @@ public final class WizardSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Pyromancer.
+     * Firstly we get the drainDamage, and then we calculate the damage that is going
+     * to be deflect from pyromancer's abilities.
      * @param player
      * */
     @Override
@@ -122,6 +130,9 @@ public final class WizardSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Knight.
+     * Firstly we get the drainDamage and then we check if Knight can execute a Wizard.
+     * If so, the wizard is dead. Otherwise we calculate the damage that is going
+     *to be deflect from knight's abilities.
      * @param player
      * */
     @Override
@@ -168,6 +179,8 @@ public final class WizardSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Rogue.
+     * Firstly we get the drainDamage, and then we calculate the damage that is going
+     * to be deflect from rogue's abilities.
      * @param player
      * */
     @Override
@@ -207,7 +220,7 @@ public final class WizardSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Wizard.
-     * Wizard doesn't use deflect on another wizard.
+     * Wizard doesn't use deflect on another wizard so we only calculate the drainDamage.
      * @param player
      * */
     @Override

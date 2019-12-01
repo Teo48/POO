@@ -88,6 +88,9 @@ public final class Main {
                 }
             }
 
+            /*
+            * If both players are alive and they are on the same cell they fight.
+            * */
             for (int j = 0; j < heroes.size() - 1; ++j) {
                 for (int k = j + 1; k < heroes.size(); ++k) {
                     if (!heroes.get(j).isDead() && !heroes.get(k).isDead()) {

@@ -29,6 +29,7 @@ public class KnightSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to determine the hpLimit of the enemy.
      * @param player
      * @return float -> Player's hplimit for the execute spell.
      * */
@@ -46,6 +47,7 @@ public class KnightSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to determine the basic damage caused by the execute and slam spells.
      * @return ArrayList<Float> -> Basic damage from execute and slam.
      * */
     private ArrayList<Float> getSpellsDamage() {
@@ -63,6 +65,8 @@ public class KnightSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to determine the total damage a Knight player is gonna deal.
+     * If the Knight player is on a LAND cell we amplify the damage with the land modifier.
      * @param map
      * @param playerExecuteModifier
      * @param playerSlamModifier
@@ -85,6 +89,8 @@ public class KnightSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Pyromancer. It also sets the number of stunned turns.
+     * If player's hp is lower than the hpLimit then he is instantlly killed, otherwise
+     * he takes the active damage.
      * @param player
      * */
     @Override
@@ -102,6 +108,8 @@ public class KnightSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Knight. It also sets the number of stunned turns.
+     * If player's hp is lower than the hpLimit then he is instantlly killed, otherwise
+     * he takes the active damage.
      * @param player
      * */
     @Override
@@ -119,6 +127,8 @@ public class KnightSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Rogue. It also sets the number of stunned turns.
+     * If player's hp is lower than the hpLimit then he is instantlly killed, otherwise
+     * he takes the active damage.
      * @param player
      * */
     @Override
@@ -136,6 +146,8 @@ public class KnightSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Wizard. It also sets the number of stunned turns.
+     * If player's hp is lower than the hpLimit then he is instantlly killed, otherwise
+     * he takes the active damage.
      * @param player
      * */
     @Override

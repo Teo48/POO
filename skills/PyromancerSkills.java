@@ -29,7 +29,9 @@ public final class PyromancerSkills implements SkillsVisitor {
 
 
     /**
-     * @return ArrayList<Float> -> Basic damage from fireblast and ignite(including
+     * Method used to determine the damage caused by Fireblast and Ignite(including the passive
+     * damage from ignite).
+     * @return ArrayList<Float> -> Basic damage from Fireblast and Ignite(including
      * passive damage from ignite).
      * */
     private ArrayList<Float> getSpellDamage() {
@@ -51,7 +53,7 @@ public final class PyromancerSkills implements SkillsVisitor {
     }
 
     /**
-     * Apply damage to a player.
+     * Method used to apply the active and passive damage.
      * @param player -> Current player.
      * @param activeDamageValue
      * @param passiveDamageValue
@@ -66,6 +68,7 @@ public final class PyromancerSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to amplify the damage of Fireblast and Ignite.
      * @param playerModifier
      * @return ArrayList<Integer> -> Spells' damage after applying the modifier.
      * */
@@ -83,6 +86,8 @@ public final class PyromancerSkills implements SkillsVisitor {
     }
 
     /**
+     * Method used to amplify the damage of Fireblast and Ignite if Pyromancer
+     * is on a VOLCANIC land.
      * @param map
      * @param player
      * @param spells
@@ -103,6 +108,7 @@ public final class PyromancerSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Pyromancer.
+     * We get the total damage and apply it to the enemy.
      * @param player
      * */
     public void visit(final Pyromancer player) {
@@ -114,6 +120,7 @@ public final class PyromancerSkills implements SkillsVisitor {
     }
     /**
      * Visit method for a Knight.
+     * We get the total damage and apply it to the enemy.
      * @param player
      * */
     public void visit(final Knight player) {
@@ -126,6 +133,7 @@ public final class PyromancerSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Wizard.
+     * We get the total damage and apply it to the enemy.
      * @param player
      * */
     public void visit(final Wizard player) {
@@ -138,6 +146,7 @@ public final class PyromancerSkills implements SkillsVisitor {
 
     /**
      * Visit method for a Rogue.
+     * We get the total damage and apply it to the enemy.
      * @param player
      * */
     public void visit(final Rogue player) {

@@ -4,6 +4,7 @@ import utils.Coordinates;
 
 /**
  * Abstract class to define a Hero.
+ * This class will be extened.
  * */
 
 public abstract class Hero {
@@ -61,6 +62,11 @@ public abstract class Hero {
         }
     }
 
+    /**
+     * Method used for applying the passive damage.
+     * If the player is alive and the passiveCounter is higher than 0 he takes the passiveDamage.
+     * If his hp goes below 0, the isDead tag is set true and then we return from the method.
+     * */
     public final void getPassiveDamage() {
         if (!this.isDead && this.passiveCounter != 0) {
                 this.hp -= this.passiveDamage;
@@ -72,11 +78,20 @@ public abstract class Hero {
         }
     }
 
+    /**
+     * @param passiveCnt -> The number of rounds for the passive damage.
+     * @param passiveDmg -> Passive damage.
+     * */
     public final void setPassiveDamage(final int passiveCnt, final int passiveDmg) {
         this.passiveCounter = passiveCnt;
         this.passiveDamage = passiveDmg;
     }
 
+    /**
+     * Method used for applying the active damage.
+     * @param damage -> Damage value.
+     * If player's hp goes below 0, the isDead tag is set true.
+     * */
     public final void getActiveDamage(final int damage) {
         this.hp -= damage;
         if (this.hp <= 0) {
