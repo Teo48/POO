@@ -1,5 +1,7 @@
 package utils;
 
+import exceptions.InvalidLandException;
+
 /**
  * Singelton class for the map.
  * */
@@ -18,7 +20,8 @@ public final class Map {
      * @param n -> map lenght.
      * @param m -> map width.
      * */
-    public void createMap(final String[] land, final int n, final int m) {
+    public void createMap(final String[] land, final int n, final int m)
+            throws InvalidLandException {
         landTypes = new LandType[n + 1][m + 1];
 
         for (int i = 0; i < n; ++i) {
@@ -37,7 +40,7 @@ public final class Map {
                         landTypes[i][j] = LandType.DESERT;
                         break;
                     default:
-                        break;
+                        throw new InvalidLandException("Invalid land!");
                 }
             }
         }
