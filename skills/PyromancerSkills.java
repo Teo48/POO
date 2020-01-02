@@ -16,13 +16,13 @@ import java.util.ArrayList;
 
 public final class PyromancerSkills implements SkillsVisitor {
     private int level;
-    private Hero hero;
+    private Pyromancer hero;
 
     /**
      * Constructor.
      * @param hero -> A pyromancer.
      * */
-    public PyromancerSkills(final Hero hero) {
+    public PyromancerSkills(final Pyromancer hero) {
         this.hero = hero;
         this.level = hero.getLevel();
     }
@@ -113,7 +113,8 @@ public final class PyromancerSkills implements SkillsVisitor {
      * */
     public void visit(final Pyromancer player) {
         Map map = Map.getInstance();
-        ArrayList<Integer> spells = getSpellModifier(PlayersModifiers.PYRO_MODIFIER.getNumber());
+        ArrayList<Integer> spells = getSpellModifier(PlayersModifiers.PYRO_MODIFIER
+                .getNumber(hero.getAngelModifier()));
         spells = applyLandModifier(map, player, spells);
         setSpellsDamage(player, spells.get(0), spells.get(1),
                 IgniteConstants.PASSIVE_COUNTER.getNumber());
@@ -121,14 +122,40 @@ public final class PyromancerSkills implements SkillsVisitor {
     /**
      * Visit method for a Knight.
      * We get the total damage and apply it to the enemy.
+     * Since Pyromancer has a special interaction with Knight,
+     * it has to apply the land modifiers first.
      * @param player
      * */
     public void visit(final Knight player) {
         Map map = Map.getInstance();
-        ArrayList<Integer> spells = getSpellModifier(PlayersModifiers.KNIGHT_MODIFIER.getNumber());
-        spells = applyLandModifier(map, player, spells);
-        setSpellsDamage(player, spells.get(0), spells.get(1),
-                IgniteConstants.PASSIVE_COUNTER.getNumber());
+        float fireBlastActiveDamage = FireblastConstants.INIT_FB_DAMAGE.getNumber();
+        fireBlastActiveDamage += this.level * FireblastConstants.FB_MODIFIER.getNumber();
+
+        float igniteActiveDamage = IgniteConstants.INIT_IGNITE_DAMAGE.getNumber();
+        igniteActiveDamage += this.level * IgniteConstants.IGNITE_DAMAGE_MODIFIER.getNumber();
+
+        float ignitePassiveDamage = IgniteConstants.INIT_IGNITE_PASSIVE.getNumber();
+        ignitePassiveDamage += this.level * IgniteConstants.IGNITE_PASSIVE_MODIFIER.getNumber();
+
+        if (map.getLandType(player.getCoordinates().getX(), player.getCoordinates().getY())
+                == LandType.VOLCANIC) {
+            fireBlastActiveDamage *=  LandModifiers.PYRO_LAND_MODIFIER.getNumber();
+            igniteActiveDamage *=  LandModifiers.PYRO_LAND_MODIFIER.getNumber();
+            ignitePassiveDamage *= LandModifiers.PYRO_LAND_MODIFIER.getNumber();
+        }
+
+        fireBlastActiveDamage = Math.round(fireBlastActiveDamage);
+        igniteActiveDamage = Math.round(igniteActiveDamage);
+        ignitePassiveDamage = Math.round(ignitePassiveDamage);
+
+        fireBlastActiveDamage *= PlayersModifiers.KNIGHT_MODIFIER
+                .getNumber(hero.getAngelModifier());
+        igniteActiveDamage *= PlayersModifiers.KNIGHT_MODIFIER.getNumber(hero.getAngelModifier());
+        ignitePassiveDamage *= PlayersModifiers.KNIGHT_MODIFIER.getNumber(hero.getAngelModifier());
+
+        player.getActiveDamage(Math.round(fireBlastActiveDamage) + Math.round(igniteActiveDamage));
+        player.setPassiveDamage(IgniteConstants.PASSIVE_COUNTER.getNumber(),
+                Math.round(ignitePassiveDamage));
     }
 
     /**
@@ -138,7 +165,8 @@ public final class PyromancerSkills implements SkillsVisitor {
      * */
     public void visit(final Wizard player) {
         Map map = Map.getInstance();
-        ArrayList<Integer> spells = getSpellModifier(PlayersModifiers.WIZARD_MODIFIER.getNumber());
+        ArrayList<Integer> spells = getSpellModifier(PlayersModifiers.WIZARD_MODIFIER
+                .getNumber(hero.getAngelModifier()));
         spells = applyLandModifier(map, player, spells);
         setSpellsDamage(player, spells.get(0), spells.get(1),
                 IgniteConstants.PASSIVE_COUNTER.getNumber());
@@ -151,7 +179,8 @@ public final class PyromancerSkills implements SkillsVisitor {
      * */
     public void visit(final Rogue player) {
         Map map = Map.getInstance();
-        ArrayList<Integer> spells = getSpellModifier(PlayersModifiers.ROGUE_MODIFIER.getNumber());
+        ArrayList<Integer> spells = getSpellModifier(PlayersModifiers.ROGUE_MODIFIER
+                .getNumber(hero.getAngelModifier()));
         spells = applyLandModifier(map, player, spells);
         setSpellsDamage(player, spells.get(0), spells.get(1),
                 IgniteConstants.PASSIVE_COUNTER.getNumber());
