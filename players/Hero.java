@@ -257,7 +257,7 @@ public abstract class Hero {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.getClass().getSimpleName().charAt(0) + " ");
+        stringBuilder.append(this.getClass().getSimpleName().charAt(0)).append(" ");
 
         if (this.isDead) {
             stringBuilder.append("dead");
