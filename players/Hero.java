@@ -1,6 +1,12 @@
 package players;
+import angels.Angel;
+import strategies.Strategy;
 import skills.SkillsVisitor;
 import utils.Coordinates;
+import utils.Observer;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstract class to define a Hero.
@@ -11,6 +17,7 @@ public abstract class Hero {
     private Coordinates coordinates;
     private int xp;
     private int hp;
+    private int id;
     private int maxHp;
     private int level;
     private int stunnedTurns;
@@ -18,6 +25,8 @@ public abstract class Hero {
     private int backstab = 0;
     private int passiveCounter = 0;
     private boolean isDead;
+    private Strategy strategy;
+    private List<Observer> observers = new LinkedList<>();
 
     /**
      * Constructor.
@@ -54,14 +63,35 @@ public abstract class Hero {
     public final void gainXp(final int enemyLevel) {
         this.xp += Math.max(0, HeroConstants.BASE_XP_GAIN.getNumber() - (this.level
             - enemyLevel) * (HeroConstants.GAIN_XP_PER_LEVEL.getNumber()));
+        calculateLevel();
+    }
 
+    public final void calculateLevel() {
         while (this.xp >= HeroConstants.BASE_XP.getNumber()
                 + this.level * HeroConstants.XP_PER_LEVEL.getNumber()) {
             ++this.level;
+            StringBuilder sb = new StringBuilder();
+            sb.append(this.getClass().getSimpleName()).append(" ").append(this.getId())
+                    .append(" reached level ").append(this.level);
+            this.notifyAll(sb.toString());
             this.hp = getMaxHpLevelUp();
+            this.maxHp = getMaxHpLevelUp();
         }
     }
 
+    public final void nextLevelXp() {
+        int neededXp = 0;
+        int nextLevelXp = HeroConstants.BASE_XP.getNumber()
+                + this.level * HeroConstants.XP_PER_LEVEL.getNumber();
+        neededXp = nextLevelXp - this.xp;
+        this.xp += neededXp;
+        calculateLevel();
+    }
+
+    public final void addXp(final int xpValue) {
+        this.xp += xpValue;
+        calculateLevel();
+    }
     /**
      * Method used for applying the passive damage.
      * If the player is alive and the passiveCounter is higher than 0 he takes the passiveDamage.
@@ -107,16 +137,56 @@ public abstract class Hero {
         return 0;
     }
 
+    public final void gainHp(final int hitPoints) {
+        this.hp = (this.hp + hitPoints) > this.maxHp ? this.maxHp : (this.hp + hitPoints);
+    }
+
+    public final void setStrategy(final Strategy st) {
+        this.strategy = st;
+    }
+
+    public final Strategy getStrategy() {
+        return strategy;
+    }
+
     /**
      * This method will be overriden.
      * @return int -> Maximum hp that a player has.
      * */
-    public int getMaxHp() {
+    public final int getMaxHp() {
         return maxHp;
+    }
+
+    public final void setId(final int id) {
+        this.id = id;
+    }
+
+    public final int getId() {
+        return id;
     }
 
     public final void setHp(final int hp) {
         this.hp = hp;
+    }
+
+    public final void takeHp(final int hitPoints) {
+        this.hp -= hitPoints;
+
+        if (this.hp <= 0) {
+            this.isDead = true;
+            StringBuilder sb = new StringBuilder();
+            sb.append("Player ").append(this.getClass().getSimpleName()).append(" ")
+                    .append(this.getId()).append(" was killed by an angel");
+            notifyAll(sb.toString());
+        }
+    }
+
+    public final void revive() {
+        this.isDead = false;
+    }
+
+    public final void kill() {
+        this.isDead = true;
     }
 
     public final void setBackstab(final int bcstb) {
@@ -139,6 +209,10 @@ public abstract class Hero {
         this.stunnedTurns = stunnedTurns;
     }
 
+    public final int getStunnedTurns() {
+        return stunnedTurns;
+    }
+
     public final Coordinates getCoordinates() {
         return this.coordinates;
     }
@@ -155,11 +229,20 @@ public abstract class Hero {
         return xp;
     }
 
+    public final List<Observer> getObservers() {
+        return observers;
+    }
+
+    public abstract void pickStrategy();
+    public abstract void addObserver(Observer observer);
+    public abstract void notifyAll(String str);
     /**
      *Accept method.
      * @param skill -> Visit accept method.
     */
     public abstract void accept(SkillsVisitor skill);
+
+    public abstract void acceptAngel(Angel angel);
 
     /**
      * @return SkillsVisitor -> Visitor.
@@ -181,8 +264,9 @@ public abstract class Hero {
             return stringBuilder.toString();
         }
 
-        stringBuilder.append(this.getLevel() + " " + this.getXp() + " " + this.getHp() + " "
-            + this.coordinates.getX() + " " + this.coordinates.getY());
+        stringBuilder.append(this.getLevel()).append(" ").append(this.getXp())
+                .append(" ").append(this.getHp()).append(" ").append(this.coordinates.getX())
+                .append(" ").append(this.coordinates.getY());
 
         return stringBuilder.toString();
     }
