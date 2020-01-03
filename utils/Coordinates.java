@@ -37,7 +37,7 @@ public final class Coordinates {
 
     /**
      * @param obj
-     * @return boolen -> Two coordinates are equals if both x and y are equals.
+     * @return boolean -> Two coordinates are equals if both x and y are equals.
      * */
     @Override
     public boolean equals(final Object obj) {
@@ -51,7 +51,7 @@ public final class Coordinates {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.x + " " + this.y);
+        stringBuilder.append(this.x).append(" ").append(this.y);
         return stringBuilder.toString();
     }
 

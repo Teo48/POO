@@ -17,7 +17,7 @@ public final class Map {
     /**
      * Method that asserts each cell a specific land type.
      * @param land -> String array.
-     * @param n -> map lenght.
+     * @param n -> map length.
      * @param m -> map width.
      * */
     public void createMap(final String[] land, final int n, final int m)
