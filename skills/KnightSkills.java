@@ -17,13 +17,13 @@ import java.util.ArrayList;
 
 public class KnightSkills implements SkillsVisitor {
     private int level;
-    private Hero hero;
+    private Knight hero;
 
     /**
      * Constructor.
      * @param hero -> A Knight.
      * */
-    public KnightSkills(final Hero hero) {
+    public KnightSkills(final Knight hero) {
         this.hero = hero;
         this.level = hero.getLevel();
     }
@@ -78,7 +78,7 @@ public class KnightSkills implements SkillsVisitor {
         spells.set(0, spells.get(0) * playerExecuteModifier);
         spells.set(1, spells.get(1) * playerSlamModifier);
 
-        float totalDamage = spells.get(0) + spells.get(1);
+        float totalDamage = Math.round(spells.get(0)) + Math.round(spells.get(1));
         if (map.getLandType(hero.getCoordinates().getX(), hero.getCoordinates().getY())
                 == LandType.LAND) {
             totalDamage *= LandModifiers.KNIGHT_LAND_MODIFIER.getNumber();
@@ -100,8 +100,8 @@ public class KnightSkills implements SkillsVisitor {
             player.getActiveDamage(player.getHp());
         } else {
             player.getActiveDamage(getTotalDamage(map,
-                    PlayersModifiers.PYRO_EXECUTE_MODIFIER.getNumber(),
-                    PlayersModifiers.PYRO_SLAM_MODIFIER.getNumber()));
+                    PlayersModifiers.PYRO_EXECUTE_MODIFIER.getNumber(hero.getAngelModifier()),
+                    PlayersModifiers.PYRO_SLAM_MODIFIER.getNumber(hero.getAngelModifier())));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
     }
@@ -119,8 +119,8 @@ public class KnightSkills implements SkillsVisitor {
             player.getActiveDamage(player.getHp());
         } else {
             player.getActiveDamage(getTotalDamage(map,
-                    PlayersModifiers.KNIGHT_EXECUTE_MODIFIER.getNumber(),
-                    PlayersModifiers.KNIGHT_SLAM_MODIFIER.getNumber()));
+                    PlayersModifiers.KNIGHT_EXECUTE_MODIFIER.getNumber(0),
+                    PlayersModifiers.KNIGHT_SLAM_MODIFIER.getNumber(hero.getAngelModifier())));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
     }
@@ -138,8 +138,8 @@ public class KnightSkills implements SkillsVisitor {
             player.getActiveDamage(player.getHp());
         } else {
             player.getActiveDamage(getTotalDamage(map,
-                    PlayersModifiers.ROGUE_EXECUTE_MODIFIER.getNumber(),
-                    PlayersModifiers.ROGUE_SLAM_MODIFIER.getNumber()));
+                    PlayersModifiers.ROGUE_EXECUTE_MODIFIER.getNumber(hero.getAngelModifier()),
+                    PlayersModifiers.ROGUE_SLAM_MODIFIER.getNumber(hero.getAngelModifier())));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
     }
@@ -157,8 +157,8 @@ public class KnightSkills implements SkillsVisitor {
             player.getActiveDamage(player.getHp());
         } else {
             player.getActiveDamage(getTotalDamage(map,
-                    PlayersModifiers.WIZARD_EXECUTE_MODIFIER.getNumber(),
-                    PlayersModifiers.WIZARD_SLAM_MODIFIER.getNumber()));
+                    PlayersModifiers.WIZARD_EXECUTE_MODIFIER.getNumber(hero.getAngelModifier()),
+                    PlayersModifiers.WIZARD_SLAM_MODIFIER.getNumber(hero.getAngelModifier())));
             player.setStunnedTurns(ExecuteConstants.STUN_SLAM_TURNS.getNumber());
         }
     }

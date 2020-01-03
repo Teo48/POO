@@ -1,14 +1,18 @@
 package players;
 
+import angels.Angel;
+import strategies.AttackStrategies.KnightAttackStrategy;
+import strategies.Context;
+import strategies.DefensiveStrategies.KnightDefensiveStrategy;
 import players.PlayersConstants.KnightConstants;
 import skills.SkillsVisitor;
 import skills.KnightSkills;
 import utils.Coordinates;
+import observers.Observer;
 
 /**
  * Class that implements the Knight player.
  * */
-
 public final class Knight extends Hero {
     /**
      * Constructor.
@@ -31,11 +35,42 @@ public final class Knight extends Hero {
     }
 
     /**
+     * Player chooses a strategy based on his hp.
+     * */
+    @Override
+    public void pickStrategy() {
+        final int three = 3;
+        final int two = 2;
+        if (getMaxHp() / three < getHp() && getHp() < getMaxHp() / two) {
+            new Context(new KnightAttackStrategy()).executeStrategy(this);
+        } else if (getHp() < getMaxHp() / three) {
+            new Context(new KnightDefensiveStrategy()).executeStrategy(this);
+        }
+    }
+
+    @Override
+    public void addObserver(final Observer observer) {
+        getObservers().add(observer);
+    }
+
+    @Override
+    public void notifyAll(final String str) {
+        for (Observer observer : getObservers()) {
+            observer.update(str);
+        }
+    }
+
+    /**
      * @param skill -> Visit accept method.
      * */
     @Override
     public void accept(final SkillsVisitor skill) {
         skill.visit(this);
+    }
+
+    @Override
+    public void acceptAngel(final Angel angel) {
+        angel.angelVisit(this);
     }
 
     /**

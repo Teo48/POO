@@ -3,7 +3,7 @@ import angels.Angel;
 import strategies.Strategy;
 import skills.SkillsVisitor;
 import utils.Coordinates;
-import utils.Observer;
+import observers.Observer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +25,7 @@ public abstract class Hero {
     private int backstab = 0;
     private int passiveCounter = 0;
     private boolean isDead;
+    private float angelModifier;
     private Strategy strategy;
     private List<Observer> observers = new LinkedList<>();
 
@@ -66,6 +67,10 @@ public abstract class Hero {
         calculateLevel();
     }
 
+    /**
+     * Method used for computing player's next level and notifying the GrandMagician.
+     * It also sets player's hp and max hp.
+     * */
     public final void calculateLevel() {
         while (this.xp >= HeroConstants.BASE_XP.getNumber()
                 + this.level * HeroConstants.XP_PER_LEVEL.getNumber()) {
@@ -75,16 +80,17 @@ public abstract class Hero {
                     .append(" reached level ").append(this.level);
             this.notifyAll(sb.toString());
             this.hp = getMaxHpLevelUp();
-            this.maxHp = getMaxHpLevelUp();
+            this.maxHp = this.hp;
         }
     }
 
+    /**
+     * Computes player's needed xp for leveling up.
+     * */
     public final void nextLevelXp() {
-        int neededXp = 0;
         int nextLevelXp = HeroConstants.BASE_XP.getNumber()
                 + this.level * HeroConstants.XP_PER_LEVEL.getNumber();
-        neededXp = nextLevelXp - this.xp;
-        this.xp += neededXp;
+        this.xp += nextLevelXp - this.xp;
         calculateLevel();
     }
 
@@ -137,6 +143,11 @@ public abstract class Hero {
         return 0;
     }
 
+    /**
+     * Increase player's hp with hitPoints value. The resulted value cannot be bigger than player's
+     * maxHp.
+     * @param hitPoints
+     * */
     public final void gainHp(final int hitPoints) {
         this.hp = (this.hp + hitPoints) > this.maxHp ? this.maxHp : (this.hp + hitPoints);
     }
@@ -169,11 +180,16 @@ public abstract class Hero {
         this.hp = hp;
     }
 
+    /**
+     * It substracts hitPoints from player's HP. If the player is killed, the GrandMagician
+     * is notified.
+     * @param hitPoints
+     * */
     public final void takeHp(final int hitPoints) {
         this.hp -= hitPoints;
 
         if (this.hp <= 0) {
-            this.isDead = true;
+            kill();
             StringBuilder sb = new StringBuilder();
             sb.append("Player ").append(this.getClass().getSimpleName()).append(" ")
                     .append(this.getId()).append(" was killed by an angel");
@@ -233,6 +249,10 @@ public abstract class Hero {
         return observers;
     }
 
+    /**
+     * Method used by a hero when choosing a strategy.
+     * This method will be overriden.
+     * */
     public abstract void pickStrategy();
     public abstract void addObserver(Observer observer);
     public abstract void notifyAll(String str);
@@ -242,6 +262,10 @@ public abstract class Hero {
     */
     public abstract void accept(SkillsVisitor skill);
 
+    /**
+     * Accept method for an angel.
+     * @param angel
+     * */
     public abstract void acceptAngel(Angel angel);
 
     /**
@@ -269,6 +293,23 @@ public abstract class Hero {
                 .append(" ").append(this.coordinates.getY());
 
         return stringBuilder.toString();
+    }
+
+    /**
+     * It stores the modifiers when a player is visited by an angel.
+     * By doing that, we are able to change player's modifiers by passing the angelModifier.
+     * @param data
+     * */
+    public void setAngelModifier(final float data) {
+        this.angelModifier += data;
+    }
+
+    /**
+     * Returns player's angelModifiers.
+     * @return float
+     * */
+    public float getAngelModifier() {
+        return this.angelModifier;
     }
 }
 

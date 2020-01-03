@@ -13,7 +13,7 @@ public enum PlayersModifiers {
         this.number = number;
     }
 
-    public float getNumber() {
-        return this.number;
+    public float getNumber(final float x) {
+        return this.number + x;
     }
 }

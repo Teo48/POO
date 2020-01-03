@@ -6,7 +6,6 @@ import utils.Coordinates;
 /**
  * Class that implements a factory for players.
  * */
-
 public abstract class HeroFactory {
     public static Hero getHeroes(final String name, final Coordinates c)
             throws InvalidPlayerException {

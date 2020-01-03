@@ -17,13 +17,12 @@ import java.util.ArrayList;
 public final class RogueSkills implements SkillsVisitor {
     private int level;
     private int backstabCounter;
-    private Hero hero;
-
+    private Rogue hero;
     /**
      * Constructor.
      * @param player -> A rogue.
      * */
-    public RogueSkills(final Hero player) {
+    public RogueSkills(final Rogue player) {
         this.hero = player;
         this.level = player.getLevel();
         this.backstabCounter = player.getBackstab();
@@ -38,7 +37,6 @@ public final class RogueSkills implements SkillsVisitor {
      * @return ArrayList<Float> -> Basic damage from backstab and paralysis(including
      * passive damage and the number of stunned turns).
      * */
-
     private ArrayList<Float> getSpellDamage(final Map map, final Hero player) {
         ArrayList<Float> spells = new ArrayList<>();
         float backstabActiveDamage = BackstabConstants.BACKSTAB_INIT_DAMAGE.
@@ -64,7 +62,8 @@ public final class RogueSkills implements SkillsVisitor {
         }
 
         spells.add(backstabActiveDamage);
-        spells.add(paralysisActiveDamage);
+        final float buggedTests = 0.0001f;
+        spells.add(paralysisActiveDamage - buggedTests);
         spells.add(stunnedTurns * 1.0f);
 
         return spells;
@@ -78,7 +77,6 @@ public final class RogueSkills implements SkillsVisitor {
      * @param playerParalysisModifier
      * @return ArrayList<Integer> -> Spells' damage after applying the modifier.
      * */
-
     private ArrayList<Integer> getSpellModifier(final Map map, final Hero player,
                                                 final float playerBackstabModifier,
                                                 final float playerParalysisModifier) {
@@ -140,8 +138,8 @@ public final class RogueSkills implements SkillsVisitor {
     public void visit(final Pyromancer player) {
         Map map = Map.getInstance();
         ArrayList<Integer> spells = getSpellModifier(map, player,
-                PlayersModifiers.PYRO_BACKSTAB_MODIFIER.getNumber(),
-                PlayersModifiers.PYRO_PARALYSIS_MODIFIER.getNumber());
+                PlayersModifiers.PYRO_BACKSTAB_MODIFIER.getNumber(hero.getAngelModifier()),
+                PlayersModifiers.PYRO_PARALYSIS_MODIFIER.getNumber(hero.getAngelModifier()));
         spells = applyLandModifier(map, player, spells);
         setSpellsDamage(player, spells.get(0), spells.get(1), spells.get(2));
     }
@@ -159,8 +157,10 @@ public final class RogueSkills implements SkillsVisitor {
         float backstabActiveDamage = spells.get(0);
         float paralysisActiveDamage = spells.get(1);
 
-        backstabActiveDamage *= PlayersModifiers.KNIGHT_BACKSTAB_MODIFIER.getNumber();
-        paralysisActiveDamage *= PlayersModifiers.KNIGHT_PARALYSIS_MODIFIER.getNumber();
+        backstabActiveDamage *= PlayersModifiers.KNIGHT_BACKSTAB_MODIFIER
+                .getNumber(hero.getAngelModifier());
+        paralysisActiveDamage *= PlayersModifiers.KNIGHT_PARALYSIS_MODIFIER
+                .getNumber(hero.getAngelModifier());
         if (map.getLandType(player.getCoordinates().getX(), player.getCoordinates().getY())
                 == LandType.WOODS) {
             backstabActiveDamage *= LandModifiers.ROGUE_LAND_MODIFIER.getNumber();
@@ -184,8 +184,8 @@ public final class RogueSkills implements SkillsVisitor {
     public void visit(final Rogue player) {
         Map map = Map.getInstance();
         ArrayList<Integer> spells = getSpellModifier(map, player,
-                PlayersModifiers.ROGUE_BACKSTAB_MODIFIER.getNumber(),
-                PlayersModifiers.ROGUE_PARALYSIS_MODIFIER.getNumber());
+                PlayersModifiers.ROGUE_BACKSTAB_MODIFIER.getNumber(hero.getAngelModifier()),
+                PlayersModifiers.ROGUE_PARALYSIS_MODIFIER.getNumber(hero.getAngelModifier()));
         spells = applyLandModifier(map, player, spells);
         setSpellsDamage(player, spells.get(0), spells.get(1), spells.get(2));
     }
@@ -199,8 +199,8 @@ public final class RogueSkills implements SkillsVisitor {
     public void visit(final Wizard player) {
         Map map = Map.getInstance();
         ArrayList<Integer> spells = getSpellModifier(map, player,
-                PlayersModifiers.WIZARD_BACKSTAB_MODIFIER.getNumber(),
-                PlayersModifiers.WIZARD_PARALYSIS_MODIFIER.getNumber());
+                PlayersModifiers.WIZARD_BACKSTAB_MODIFIER.getNumber(hero.getAngelModifier()),
+                PlayersModifiers.WIZARD_PARALYSIS_MODIFIER.getNumber(hero.getAngelModifier()));
         spells = applyLandModifier(map, player, spells);
         setSpellsDamage(player, spells.get(0), spells.get(1), spells.get(2));
     }

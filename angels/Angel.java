@@ -6,7 +6,7 @@ import players.Pyromancer;
 import players.Wizard;
 import players.Rogue;
 import utils.Coordinates;
-import utils.Observer;
+import observers.Observer;
 
 import java.util.LinkedList;
 import java.util.List;

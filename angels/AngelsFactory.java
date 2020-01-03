@@ -6,7 +6,6 @@ import utils.Coordinates;
 /**
  * Class that implements a factory for angels.
  * */
-
 public abstract class AngelsFactory {
     public static Angel getAngels(final String name, final Coordinates c)
             throws InvalidAngelException {

@@ -3,7 +3,6 @@ package skills.WizardSkillsConstants;
 /**
  * Enum for deflect constants.
  * */
-
 public enum DeflectConstants {
     INIT_DEFLECT_PROCENT(35), DEFlECT_MODIFIER(2), MAX_PROC(70), HUNDREAD(100);
     private int number;

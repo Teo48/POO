@@ -9,10 +9,10 @@ import exceptions.InvalidPlayerException;
 import players.Hero;
 import players.HeroFactory;
 import utils.Coordinates;
-import utils.GrandMagician;
+import observers.GrandMagician;
 import utils.Map;
 import utils.Reader;
-import utils.Observer;
+import observers.Observer;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,10 +25,12 @@ public final class Main {
 
     /**
      * Reads the input data from args[0] using an instance of Reader.
-     * Creats an array of heroes and then the game starts.
+     * Opens a PrintStream from args[1] and redirects the output to the Sys.Console.
+     * Creates an ArrayList with all the players in the current game.
+     * Stores an array with all the movements players are going to execute.
+     * Creates an ArrayList with all the angels in the current game and then the game starts.
      * */
-    public static void main(final String[] args) throws IOException, InvalidMoveException,
-            InvalidLandException {
+    public static void main(final String[] args) throws IOException, InvalidMoveException {
         int n, m;
         Reader reader = new Reader(args[0]);
         PrintStream printStream = new PrintStream(new File(args[1]));
@@ -134,6 +136,12 @@ public final class Main {
         }
     }
 
+    /**
+     * Method used for notifying the GrandMagician when a player is killed.
+     * @param heroes
+     * @param k
+     * @param j
+     * */
     private static void showKilledPlayers(final ArrayList<Hero> heroes, final int k, final int j) {
         StringBuilder sb = new StringBuilder();
         sb.append("Player ").append(heroes.get(k).getClass().getSimpleName()).append(" ")
@@ -143,6 +151,15 @@ public final class Main {
         heroes.get(k).notifyAll(sb.toString());
     }
 
+    /**
+     * Method used to apply angels' effects at the end of each round.
+     * The grandMagician is notified when an angel is spawned.
+     * An angel visits a player if they are on the same cell.
+     * @param angels
+     * @param heroes
+     * @param counter
+     * @param grandMagician
+     * */
     private static void applyAngelsEffects(final ArrayList<ArrayList<Angel>> angels,
                                            final ArrayList<Hero> heroes, final int counter,
                                            final Observer grandMagician) {
@@ -164,6 +181,19 @@ public final class Main {
         }
     }
 
+    /**
+     * Game's logic.
+     * At the start of each round we apply the passive damage to each player.
+     * If the hero is not dead or stunned he picks a strategy based on his HP.
+     * After that the movements are executed and if there are two or more players on the same
+     * cell, they fight.
+     * @param angels
+     * @param heroes
+     * @param nrAngelsPerRound
+     * @param moves
+     * @param nrRounds
+     * @param grandMagician
+     * */
     private static void playGame(final ArrayList<ArrayList<Angel>> angels,
                                  final ArrayList<Hero> heroes,
                                  final ArrayList<Integer> nrAngelsPerRound, final String[] moves,
@@ -173,11 +203,12 @@ public final class Main {
         for (int i = 0; i < nrRounds; ++i) {
             System.out.println("~~ Round " + (i + 1) + " ~~");
 
-
-            if (i != 0) {
-                for (Hero h : heroes) {
-                    h.getPassiveDamage();
+            for (Hero h : heroes) {
+                if (h.isDead()) {
+                    continue;
                 }
+
+                h.getPassiveDamage();
             }
 
             for (int j = 0; j < heroes.size(); ++j) {

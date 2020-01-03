@@ -8,7 +8,6 @@ import players.Wizard;
 /**
  * Visitor interface.
  * */
-
 public interface SkillsVisitor {
     void visit(Pyromancer hero);
     void visit(Knight hero);

@@ -22,13 +22,13 @@ public final class WizardSkills implements SkillsVisitor {
     private int level;
     private int hp;
     private int maxHp;
-    private Hero hero;
+    private Wizard hero;
 
     /**
      * Constructor.
      * @param hero -> A wizzard.
      * */
-    public WizardSkills(final Hero hero) {
+    public WizardSkills(final Wizard hero) {
         this.hero = hero;
         this.level = hero.getLevel();
         this.hp = hero.getHp();
@@ -53,7 +53,7 @@ public final class WizardSkills implements SkillsVisitor {
 
         drainProcent *= playerModifier;
         drainProcent /= DrainConstants.HUNDREAD.getNumber();
-        drainProcent = drainProcent * baseHp;
+        drainProcent *= baseHp;
 
         if (map.getLandType(player.getCoordinates().getX(),
                 player.getCoordinates().getY()) == LandType.DESERT) {
@@ -77,7 +77,7 @@ public final class WizardSkills implements SkillsVisitor {
     private float getDeflectDamage(final Map map, final Hero player, final float playerModifier,
                                    final float opponentPower) {
         float deflectProcent = DeflectConstants.INIT_DEFLECT_PROCENT.getNumber()
-                + this.level * DeflectConstants.DEFlECT_MODIFIER.getNumber();
+                + hero.getLevel() * DeflectConstants.DEFlECT_MODIFIER.getNumber();
         deflectProcent = Math.min(deflectProcent, DeflectConstants.MAX_PROC.getNumber());
         deflectProcent /= DrainConstants.HUNDREAD.getNumber();
         deflectProcent *= playerModifier;
@@ -102,7 +102,7 @@ public final class WizardSkills implements SkillsVisitor {
     public void visit(final Pyromancer player) {
         Map map = Map.getInstance();
         float drainDamage = getDrainDamage(map,
-                PlayersModifiers.PYRO_DRAIN_MODIFIER.getNumber(), player);
+                PlayersModifiers.PYRO_DRAIN_MODIFIER.getNumber(hero.getAngelModifier()), player);
         drainDamage = Math.round(drainDamage);
 
         float fireBlastActiveDamage = FireblastConstants.INIT_FB_DAMAGE.getNumber();
@@ -120,7 +120,7 @@ public final class WizardSkills implements SkillsVisitor {
         igniteActiveDamage = Math.round(igniteActiveDamage);
         float opponentPower = fireBlastActiveDamage + igniteActiveDamage;
         float deflectDamage = getDeflectDamage(map, player,
-                PlayersModifiers.PYRO_ATTACK_MODIFIER.getNumber(),
+                PlayersModifiers.PYRO_ATTACK_MODIFIER.getNumber(hero.getAngelModifier()),
                 opponentPower);
         deflectDamage = Math.round(deflectDamage);
         float totalActiveDamage = deflectDamage + drainDamage;
@@ -139,31 +139,32 @@ public final class WizardSkills implements SkillsVisitor {
     public void visit(final Knight player) {
         Map map = Map.getInstance();
         float drainDamage = getDrainDamage(map,
-                PlayersModifiers.KNIGHT_DRAIN_MODIFIER.getNumber(), player);
+                PlayersModifiers.KNIGHT_DRAIN_MODIFIER
+                        .getNumber(hero.getAngelModifier()), player);
         drainDamage = Math.round(drainDamage);
 
         float opponentPower = 0;
-        float hpLimit = ExecuteConstants.HP_MIN_LIMIT_COEF.getFloatNumber() * this.maxHp;
+        float hpLimit = ExecuteConstants.HP_MIN_LIMIT_COEF.getFloatNumber() * hero.getMaxHp();
         if (ExecuteConstants.EXEC_MAX_DAMAGE_LEVEL.getNumber() > player.getLevel()) {
             hpLimit += ((float) this.level / DrainConstants.HUNDREAD.getNumber())
                     * player.getMaxHpLevelUp();
         } else {
-            hpLimit += ExecuteConstants.HP_MAX_LIMIT_COEF.getFloatNumber() * this.maxHp;
+            hpLimit += ExecuteConstants.HP_MAX_LIMIT_COEF.getFloatNumber() * hero.getMaxHp();
         }
 
         boolean isExecuted = false;
-        if ((float) this.hp < hpLimit && this.hp > 0) {
+        if ((float) hero.getHp() < hpLimit && hero.getHp() > 0) {
             isExecuted = true;
-            opponentPower = this.hp;
-        } else {
-            float executeDamage = ExecuteConstants.INIT_EXEC_DAMAGE.getNumber();
-            executeDamage += this.level * ExecuteConstants.EXEC_LEVEL_MODIFIER.getNumber();
-
-            float slamDamage = SlamConstants.INIT_SLAM_DAMAGE.getNumber();
-            slamDamage += this.level * SlamConstants.SLAM_LEVEL_MODIFIER.getNumber();
-
-            opponentPower = executeDamage + slamDamage;
         }
+
+        float executeDamage = ExecuteConstants.INIT_EXEC_DAMAGE.getNumber();
+        executeDamage += player.getLevel() * ExecuteConstants.EXEC_LEVEL_MODIFIER.getNumber();
+
+        float slamDamage = SlamConstants.INIT_SLAM_DAMAGE.getNumber();
+        slamDamage += player.getLevel() * SlamConstants.SLAM_LEVEL_MODIFIER.getNumber();
+
+        opponentPower = executeDamage + slamDamage;
+
 
         if (map.getLandType(player.getCoordinates().getX(), player.getCoordinates().getY())
                 == LandType.LAND && !isExecuted) {
@@ -171,9 +172,11 @@ public final class WizardSkills implements SkillsVisitor {
         }
 
         float deflectDamage = getDeflectDamage(map, player,
-                PlayersModifiers.KNIGHT_ATTACK_MODIFIER.getNumber(), opponentPower);
+                PlayersModifiers.KNIGHT_ATTACK_MODIFIER
+                        .getNumber(hero.getAngelModifier()), opponentPower);
         deflectDamage = Math.round(deflectDamage);
         float totalActiveDamage = deflectDamage + drainDamage;
+
         player.getActiveDamage(Math.round(totalActiveDamage));
     }
 
@@ -186,7 +189,8 @@ public final class WizardSkills implements SkillsVisitor {
     @Override
     public void visit(final Rogue player) {
         Map map = Map.getInstance();
-        float drainDamage = getDrainDamage(map, PlayersModifiers.ROGUE_DRAIN_MODIFIER.getNumber(),
+        float drainDamage = getDrainDamage(map, PlayersModifiers.ROGUE_DRAIN_MODIFIER
+                        .getNumber(hero.getAngelModifier()),
                 player);
         drainDamage = Math.round(drainDamage);
 
@@ -212,7 +216,8 @@ public final class WizardSkills implements SkillsVisitor {
         }
 
         float deflectDamage = getDeflectDamage(map, player,
-                PlayersModifiers.ROGUE_ATTACK_MODIFIER.getNumber(), opponentPower);
+                PlayersModifiers.ROGUE_ATTACK_MODIFIER
+                        .getNumber(hero.getAngelModifier()), opponentPower);
         deflectDamage = Math.round(deflectDamage);
         float totalActiveDamage = deflectDamage + drainDamage;
         player.getActiveDamage(Math.round(totalActiveDamage));
@@ -227,9 +232,8 @@ public final class WizardSkills implements SkillsVisitor {
     public void visit(final Wizard player) {
         Map map = Map.getInstance();
         float drainDamage = getDrainDamage(map,
-                PlayersModifiers.WIZARD_DRAIN_MODIFIER.getNumber(), player);
+                PlayersModifiers.WIZARD_DRAIN_MODIFIER.getNumber(hero.getAngelModifier()), player);
         drainDamage = Math.round(drainDamage);
         player.getActiveDamage(Math.round(drainDamage));
-
     }
 }

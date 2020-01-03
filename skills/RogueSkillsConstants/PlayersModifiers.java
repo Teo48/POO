@@ -3,7 +3,6 @@ package skills.RogueSkillsConstants;
 /**
  * Enum for players' modifiers.
  * */
-
 public enum PlayersModifiers {
     PYRO_BACKSTAB_MODIFIER(1.25f), PYRO_PARALYSIS_MODIFIER(1.2f), KNIGHT_BACKSTAB_MODIFIER(0.9f),
     KNIGHT_PARALYSIS_MODIFIER(0.8f), ROGUE_BACKSTAB_MODIFIER(1.2f), ROGUE_PARALYSIS_MODIFIER(0.9f),
@@ -14,7 +13,7 @@ public enum PlayersModifiers {
         this.number = number;
     }
 
-    public float getNumber() {
-        return this.number;
+    public float getNumber(final float x) {
+        return this.number + x;
     }
 }
