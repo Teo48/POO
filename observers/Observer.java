@@ -1,4 +1,4 @@
-package utils;
+package observers;
 
 @FunctionalInterface
 public interface Observer {
