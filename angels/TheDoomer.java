@@ -24,7 +24,7 @@ public final class TheDoomer extends Angel {
         StringBuilder sb = new StringBuilder();
         sb.append("Player ").append(hero.getClass().getSimpleName())
                 .append(" ").append(hero.getId()).append(" was killed by an angel");
-        this.notifyAll(sb.toString());
+        this.notifyObserver(sb.toString());
     }
 
     /**

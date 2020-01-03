@@ -49,14 +49,12 @@ public final class Rogue extends Hero {
 
     @Override
     public void addObserver(final Observer observer) {
-        getObservers().add(observer);
+        attach(observer);
     }
 
     @Override
-    public void notifyAll(final String str) {
-        for (Observer observer : getObservers()) {
-            observer.update(str);
-        }
+    public void notifyObserver(final String str) {
+        getObserver().update(str);
     }
 
     /**

@@ -8,16 +8,13 @@ import players.Rogue;
 import utils.Coordinates;
 import observers.Observer;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Abstract class to define an angel.
  * This class will be extended.
  * */
 public abstract class Angel {
     private Coordinates coordinates;
-    private List<Observer> observers = new LinkedList<>();
+    private Observer observer;
 
     /**
      * Constructor.
@@ -41,7 +38,7 @@ public abstract class Angel {
         StringBuilder sb = new StringBuilder();
                 sb.append(this.getClass().getSimpleName()).append(" helped ")
                 .append(hero.getClass().getSimpleName()).append(" ").append(hero.getId());
-        this.notifyAll(sb.toString());
+        this.notifyObserver(sb.toString());
     }
 
     /**
@@ -54,25 +51,23 @@ public abstract class Angel {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getClass().getSimpleName()).append(" hit ")
                 .append(hero.getClass().getSimpleName() + " ").append(hero.getId());
-        this.notifyAll(sb.toString());
+        this.notifyObserver(sb.toString());
     }
 
     /**
      * Adds an Observer to the observers' list.
-     * @param observer
+     * @param obs
      * */
-    public final void addObserver(final Observer observer) {
-        observers.add(observer);
+    public final void addObserver(final Observer obs) {
+        this.observer = obs;
     }
 
     /**
      * Notifies all the observers.
      * @param str
      * */
-    public final void notifyAll(final String str) {
-        for (Observer observer : observers) {
-            observer.update(str);
-        }
+    public final void notifyObserver(final String str) {
+        observer.update(str);
     }
 
     /**

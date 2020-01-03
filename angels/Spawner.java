@@ -25,7 +25,7 @@ public final class Spawner extends Angel {
         StringBuilder sb = new StringBuilder();
         sb.append("Player ").append(hero.getClass().getSimpleName())
                 .append(" ").append(hero.getId()).append(" was brought to life by an angel");
-        this.notifyAll(sb.toString());
+        this.notifyObserver(sb.toString());
     }
 
     /**

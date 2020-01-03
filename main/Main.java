@@ -148,7 +148,7 @@ public final class Main {
                 .append(heroes.get(k).getId()).append(" was killed by ")
                 .append(heroes.get(j).getClass().getSimpleName()).append(" ")
                 .append(heroes.get(j).getId());
-        heroes.get(k).notifyAll(sb.toString());
+        heroes.get(k).notifyObserver(sb.toString());
     }
 
     /**
@@ -170,7 +170,7 @@ public final class Main {
                     .append(" was spawned at ").append(angels.get(counter).get(j)
                     .getCoordinates().getX()).append(" ").append(angels.get(counter).get(j)
                     .getCoordinates().getY());
-            angels.get(counter).get(j).notifyAll(sb.toString());
+            angels.get(counter).get(j).notifyObserver(sb.toString());
 
             for (int k = 0; k < heroes.size(); ++k) {
                 if (angels.get(counter).get(j).getCoordinates()

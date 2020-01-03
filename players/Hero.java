@@ -5,9 +5,6 @@ import skills.SkillsVisitor;
 import utils.Coordinates;
 import observers.Observer;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Abstract class to define a Hero.
  * This class will be extened.
@@ -27,7 +24,7 @@ public abstract class Hero {
     private boolean isDead;
     private float angelModifier;
     private Strategy strategy;
-    private List<Observer> observers = new LinkedList<>();
+    private Observer observer;
 
     /**
      * Constructor.
@@ -78,7 +75,7 @@ public abstract class Hero {
             StringBuilder sb = new StringBuilder();
             sb.append(this.getClass().getSimpleName()).append(" ").append(this.getId())
                     .append(" reached level ").append(this.level);
-            this.notifyAll(sb.toString());
+            this.notifyObserver(sb.toString());
             this.hp = getMaxHpLevelUp();
             this.maxHp = this.hp;
         }
@@ -193,7 +190,7 @@ public abstract class Hero {
             StringBuilder sb = new StringBuilder();
             sb.append("Player ").append(this.getClass().getSimpleName()).append(" ")
                     .append(this.getId()).append(" was killed by an angel");
-            notifyAll(sb.toString());
+            notifyObserver(sb.toString());
         }
     }
 
@@ -245,8 +242,16 @@ public abstract class Hero {
         return xp;
     }
 
-    public final List<Observer> getObservers() {
-        return observers;
+    public final Observer getObserver() {
+        return observer;
+    }
+
+    /**
+     * Attaches an observer.
+     * @param obs
+     * */
+    public void attach(final Observer obs) {
+        this.observer = obs;
     }
 
     /**
@@ -254,8 +259,8 @@ public abstract class Hero {
      * This method will be overriden.
      * */
     public abstract void pickStrategy();
-    public abstract void addObserver(Observer observer);
-    public abstract void notifyAll(String str);
+    public abstract void addObserver(Observer obs);
+    public abstract void notifyObserver(String str);
     /**
      *Accept method.
      * @param skill -> Visit accept method.
