@@ -7,11 +7,21 @@ import players.Rogue;
 import players.Wizard;
 import utils.Coordinates;
 
+/**
+ * Class that implements the Dracula angel.
+ * */
 public final class Dracula extends Angel {
     public Dracula(final Coordinates c) {
         super(c);
     }
 
+    /**
+     * Visit method for a Pyromancer.
+     * It checks if the player is not dead and changes its modifiers accordingly.
+     * The GrandMagician is notified.
+     * And then it substracts HP from the current player.
+     * @param hero
+     * */
     @Override
     public void angelVisit(final Pyromancer hero) {
         if (!hero.isDead()) {
@@ -21,6 +31,13 @@ public final class Dracula extends Angel {
         }
     }
 
+    /**
+     * Visit method for a Knight.
+     * It checks if the player is not dead and changes its modifiers accordingly.
+     * The GrandMagician is notified.
+     * And then it substracts HP from the current player.
+     * @param hero
+     * */
     @Override
     public void angelVisit(final Knight hero) {
         if (!hero.isDead()) {
@@ -30,6 +47,13 @@ public final class Dracula extends Angel {
         }
     }
 
+    /**
+     * Visit method for a Rogue.
+     * It checks if the player is not dead and changes its modifiers accordingly.
+     * The GrandMagician is notified.
+     * And then it substracts HP from the current player.
+     * @param hero
+     * */
     @Override
     public void angelVisit(final Rogue hero) {
         if (!hero.isDead()) {
@@ -39,6 +63,13 @@ public final class Dracula extends Angel {
         }
     }
 
+    /**
+     * Visit method for a Wizard.
+     * It checks if the player is not dead and changes its modifiers accordingly.
+     * The GrandMagician is notified.
+     * And then it substracts HP from the current player.
+     * @param hero
+     * */
     @Override
     public void angelVisit(final Wizard hero) {
         if (!hero.isDead()) {
