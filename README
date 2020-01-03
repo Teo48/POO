@@ -116,7 +116,7 @@ utils
 
 ~~strategy package~~
 --------------------
-- Attack and Defense strategies used by the players.
+ - Attack and Defense strategies used by the players.
 
 ~~utils package~~
 -----------------
