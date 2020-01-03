@@ -8,7 +8,7 @@ import players.Rogue;
 public final class RogueAttackStrategy implements Strategy {
     @Override
     public void modifyAttributes(final Hero hero) {
-        hero.setHp(hero.getHp() - hero.getHp() / StrategiesConstants.ROGUE_ATTACK_HP.getX());
+        hero.takeHp(hero.getHp() / StrategiesConstants.ROGUE_ATTACK_HP.getX());
         ((Rogue) hero).setAngelModifier(StrategiesConstants.ROGUE_ATTACK_MODIFIER.getNumber());
     }
 }

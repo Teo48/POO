@@ -2,6 +2,9 @@ package strategies;
 
 import players.Hero;
 
+/**
+ * Class whose behavior varies as per its strategy.
+ * */
 public final class Context {
     private Strategy strategy;
 
