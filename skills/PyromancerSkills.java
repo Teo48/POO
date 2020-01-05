@@ -81,7 +81,6 @@ public final class PyromancerSkills implements SkillsVisitor {
         ArrayList<Integer> modifiedSpells = new ArrayList<>();
         modifiedSpells.add(Math.round(spells.get(0) + spells.get(1)));
         modifiedSpells.add(Math.round(spells.get(2)));
-
         return modifiedSpells;
     }
 
@@ -128,34 +127,28 @@ public final class PyromancerSkills implements SkillsVisitor {
      * */
     public void visit(final Knight player) {
         Map map = Map.getInstance();
-        float fireBlastActiveDamage = FireblastConstants.INIT_FB_DAMAGE.getNumber();
-        fireBlastActiveDamage += this.level * FireblastConstants.FB_MODIFIER.getNumber();
-
-        float igniteActiveDamage = IgniteConstants.INIT_IGNITE_DAMAGE.getNumber();
-        igniteActiveDamage += this.level * IgniteConstants.IGNITE_DAMAGE_MODIFIER.getNumber();
-
-        float ignitePassiveDamage = IgniteConstants.INIT_IGNITE_PASSIVE.getNumber();
-        ignitePassiveDamage += this.level * IgniteConstants.IGNITE_PASSIVE_MODIFIER.getNumber();
+        ArrayList<Float> spells = getSpellDamage();
 
         if (map.getLandType(player.getCoordinates().getX(), player.getCoordinates().getY())
                 == LandType.VOLCANIC) {
-            fireBlastActiveDamage *=  LandModifiers.PYRO_LAND_MODIFIER.getNumber();
-            igniteActiveDamage *=  LandModifiers.PYRO_LAND_MODIFIER.getNumber();
-            ignitePassiveDamage *= LandModifiers.PYRO_LAND_MODIFIER.getNumber();
+            spells.set(0, spells.get(0) * LandModifiers.PYRO_LAND_MODIFIER.getNumber());
+            spells.set(1, spells.get(1) * LandModifiers.PYRO_LAND_MODIFIER.getNumber());
+            spells.set(2, spells.get(2) * LandModifiers.PYRO_LAND_MODIFIER.getNumber());
         }
 
-        fireBlastActiveDamage = Math.round(fireBlastActiveDamage);
-        igniteActiveDamage = Math.round(igniteActiveDamage);
-        ignitePassiveDamage = Math.round(ignitePassiveDamage);
+        spells.set(0, Math.round(spells.get(0)) * 1.0f);
+        spells.set(1, Math.round(spells.get(1)) * 1.0f);
+        spells.set(2, Math.round(spells.get(2)) * 1.0f);
 
-        fireBlastActiveDamage *= PlayersModifiers.KNIGHT_MODIFIER
-                .getNumber(hero.getAngelModifier());
-        igniteActiveDamage *= PlayersModifiers.KNIGHT_MODIFIER.getNumber(hero.getAngelModifier());
-        ignitePassiveDamage *= PlayersModifiers.KNIGHT_MODIFIER.getNumber(hero.getAngelModifier());
-
-        player.getActiveDamage(Math.round(fireBlastActiveDamage) + Math.round(igniteActiveDamage));
+        spells.set(0, spells.get(0) * PlayersModifiers.KNIGHT_MODIFIER
+                .getNumber(hero.getAngelModifier()));
+        spells.set(1, spells.get(1) * PlayersModifiers.KNIGHT_MODIFIER
+                .getNumber(hero.getAngelModifier()));
+        spells.set(2, spells.get(2) * PlayersModifiers.KNIGHT_MODIFIER
+                .getNumber(hero.getAngelModifier()));
+        player.getActiveDamage(Math.round(spells.get(0)) + Math.round(spells.get(1)));
         player.setPassiveDamage(IgniteConstants.PASSIVE_COUNTER.getNumber(),
-                Math.round(ignitePassiveDamage));
+                Math.round(spells.get(2)));
     }
 
     /**
