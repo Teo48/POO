@@ -5,10 +5,10 @@ import players.Hero;
 /**
  * Class whose behavior varies as per its strategy.
  * */
-public final class Context {
+public final class HeroStrategy {
     private Strategy strategy;
 
-    public Context(final Strategy strategy) {
+    public HeroStrategy(final Strategy strategy) {
         this.strategy = strategy;
     }
 
