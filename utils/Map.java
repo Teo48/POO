@@ -8,7 +8,7 @@ import exceptions.InvalidLandException;
 
 public final class Map {
     private LandType[][] landTypes;
-    private static final Map MAP = new Map();
+    private static volatile Map map = new Map();
 
     private Map() {
         landTypes = new LandType[0][0];
@@ -51,10 +51,14 @@ public final class Map {
     }
 
     public static Map getInstance() {
-        if (MAP == null) {
-            new Map();
+        if (map == null) {
+            synchronized (Map.class) {
+               if (map == null) {
+                   return new Map();
+               }
+            }
         }
 
-        return MAP;
+        return map;
     }
 }
