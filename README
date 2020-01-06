@@ -67,7 +67,7 @@ strategies
 		  					|_KnightAttackStrategy, PyromancerAttackStrategy,
 		  					  RogueAttackStrategy, WizardAttackStrategy.
 		  |_DefensiveStrategies
-		  					   |_Context, StrategiesConstants, Strategy.
+		  					   |_HeroStrategy, StrategiesConstants, Strategy.
 
 utils
 	|_Coordinates
