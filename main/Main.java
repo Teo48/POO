@@ -261,6 +261,10 @@ public final class Main {
                             if (heroes.get(j).isDead() && heroes.get(k).isDead()) {
                                 showKilledPlayers(heroes, k, j);
                                 showKilledPlayers(heroes, j, k);
+                                int firstPlayerLevel = heroes.get(k).getLevel();
+                                int secondPlayerLevel = heroes.get(j).getLevel();
+                                heroes.get(j).gainXp(firstPlayerLevel);
+                                heroes.get(k).gainXp(secondPlayerLevel);
                             }
                         }
                     }

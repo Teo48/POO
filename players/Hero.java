@@ -76,6 +76,9 @@ public abstract class Hero {
             sb.append(this.getClass().getSimpleName()).append(" ").append(this.getId())
                     .append(" reached level ").append(this.level);
             this.notifyObserver(sb.toString());
+            if (this.isDead) {
+                isDead = false;
+            }
             this.hp = getMaxHpLevelUp();
             this.maxHp = this.hp;
         }
