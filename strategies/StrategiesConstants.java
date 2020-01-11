@@ -3,7 +3,6 @@ package strategies;
 /**
  * Enum for Strageies' constants.
  * */
-
 public enum StrategiesConstants {
     PYROMANCER_ATTACK_MODIFIER(0.7f), PYROMANCER_DEFENSE_MODIFIER(-0.3f),
     KNIGHT_ATTACK_MODIFIER(0.5f), KNIGHT_DEFENSE_MODIFIER(-0.2f), ROGUE_ATTACK_MODIFIER(0.4f),
