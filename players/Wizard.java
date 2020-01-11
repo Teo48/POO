@@ -1,9 +1,7 @@
 package players;
 
 import angels.Angel;
-import strategies.AttackStrategies.WizardAttackStrategy;
-import strategies.Context;
-import strategies.DefensiveStrategies.WizardDefensiveStrategy;
+import strategies.HeroStrategyFactory;
 import players.PlayersConstants.WizardConstants;
 import skills.SkillsVisitor;
 import skills.WizardSkills;
@@ -39,9 +37,9 @@ public final class Wizard extends Hero {
         final int two = 2;
         final int four = 4;
         if (getMaxHp() / four < getHp() && getHp() < getMaxHp() / two) {
-            new Context(new WizardAttackStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("WizardAttackStrategy").modifyAttributes(this);
         } else if (getHp() < getMaxHp() / four) {
-            new Context(new WizardDefensiveStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("WizardDefensiveStrategy").modifyAttributes(this);
         }
     }
 

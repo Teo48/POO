@@ -1,9 +1,7 @@
 package players;
 
 import angels.Angel;
-import strategies.AttackStrategies.PyromancerAttackStrategy;
-import strategies.Context;
-import strategies.DefensiveStrategies.PyromancerDefensiveStrategy;
+import strategies.HeroStrategyFactory;
 import players.PlayersConstants.PyromancerConstants;
 import skills.SkillsVisitor;
 import skills.PyromancerSkills;
@@ -40,9 +38,9 @@ public final class Pyromancer extends Hero {
         final int three = 3;
         final int four = 4;
         if (getMaxHp() / four < getHp() && getHp() < getMaxHp() / three) {
-            new Context(new PyromancerAttackStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("PyromancerAttackStrategy").modifyAttributes(this);
         } else if (super.getHp() < super.getMaxHp() / four) {
-            new Context(new PyromancerDefensiveStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("PyromancerDefensiveStrategy").modifyAttributes(this);
         }
     }
 

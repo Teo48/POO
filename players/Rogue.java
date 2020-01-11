@@ -1,9 +1,7 @@
 package players;
 
 import angels.Angel;
-import strategies.AttackStrategies.RogueAttackStrategy;
-import strategies.Context;
-import strategies.DefensiveStrategies.RogueDefensiveStrategy;
+import strategies.HeroStrategyFactory;
 import players.PlayersConstants.RogueConstants;
 import skills.SkillsVisitor;
 import skills.RogueSkills;
@@ -41,9 +39,9 @@ public final class Rogue extends Hero {
         final int seven = 7;
         final int five = 5;
         if (getMaxHp() / seven < getHp() && getHp() < getMaxHp() / five) {
-            new Context(new RogueAttackStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("RogueAttackStrategy").modifyAttributes(this);
         } else if (getHp() < getMaxHp() / seven) {
-            new Context(new RogueDefensiveStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("RogueDefensiveStrategy").modifyAttributes(this);
         }
     }
 

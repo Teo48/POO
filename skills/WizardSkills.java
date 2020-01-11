@@ -77,7 +77,7 @@ public final class WizardSkills implements SkillsVisitor {
     private float getDeflectDamage(final Map map, final Hero player, final float playerModifier,
                                    final float opponentPower) {
         float deflectProcent = DeflectConstants.INIT_DEFLECT_PROCENT.getNumber()
-                + hero.getLevel() * DeflectConstants.DEFlECT_MODIFIER.getNumber();
+                + this.level * DeflectConstants.DEFlECT_MODIFIER.getNumber();
         deflectProcent = Math.min(deflectProcent, DeflectConstants.MAX_PROC.getNumber());
         deflectProcent /= DrainConstants.HUNDREAD.getNumber();
         deflectProcent *= playerModifier;
@@ -125,7 +125,6 @@ public final class WizardSkills implements SkillsVisitor {
         deflectDamage = Math.round(deflectDamage);
         float totalActiveDamage = deflectDamage + drainDamage;
         player.getActiveDamage(Math.round(totalActiveDamage));
-
     }
 
     /**

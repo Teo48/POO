@@ -201,7 +201,9 @@ public final class Main {
             throws InvalidMoveException {
         int cnt = 0;
         for (int i = 0; i < nrRounds; ++i) {
-            System.out.println("~~ Round " + (i + 1) + " ~~");
+            StringBuilder sb = new StringBuilder();
+            sb.append("~~ Round ").append(i + 1).append(" ~~");
+            System.out.println(sb.toString());
 
             for (Hero h : heroes) {
                 if (h.isDead()) {
@@ -255,7 +257,6 @@ public final class Main {
                             } else {
                                 fight(heroes, k, j);
                             }
-
                             gainPoints(heroes, j, k);
                             gainPoints(heroes, k, j);
                             if (heroes.get(j).isDead() && heroes.get(k).isDead()) {

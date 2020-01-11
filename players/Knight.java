@@ -1,9 +1,7 @@
 package players;
 
 import angels.Angel;
-import strategies.AttackStrategies.KnightAttackStrategy;
-import strategies.Context;
-import strategies.DefensiveStrategies.KnightDefensiveStrategy;
+import strategies.HeroStrategyFactory;
 import players.PlayersConstants.KnightConstants;
 import skills.SkillsVisitor;
 import skills.KnightSkills;
@@ -42,9 +40,9 @@ public final class Knight extends Hero {
         final int three = 3;
         final int two = 2;
         if (getMaxHp() / three < getHp() && getHp() < getMaxHp() / two) {
-            new Context(new KnightAttackStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("KnightAttackStrategy").modifyAttributes(this);
         } else if (getHp() < getMaxHp() / three) {
-            new Context(new KnightDefensiveStrategy()).executeStrategy(this);
+            HeroStrategyFactory.getInstance("KnightDefensiveStrategy").modifyAttributes(this);
         }
     }
 
