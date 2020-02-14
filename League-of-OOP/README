@@ -1,0 +1,138 @@
+Copyright Teodor Matei - 323 CA
+ _                                          __   _____  ___________ 
+| |                                        / _| |  _  ||  _  | ___ \
+| |     ___  __ _  __ _ _   _  ___    ___ | |_  | | | || | | | |_/ /
+| |    / _ \/ _` |/ _` | | | |/ _ \  / _ \|  _| | | | || | | |  __/ 
+| |___|  __/ (_| | (_| | |_| |  __/ | (_) | |   \ \_/ /\ \_/ / |    
+\_____/\___|\__,_|\__, |\__,_|\___|  \___/|_|    \___/  \___/\_|    
+                   __/ |                                            
+                  |___/                                             
+
+The homework required to implement a minimalistic version of League of Legends.
+
+!Tab width: 4 is required for a better experience xD
+===============================================================================
+
+The project structure is the following:
+
+!The UML Charts -> playersUML.png, skillsUML.png, angelsUML.png.
+
+angels
+	  |_AngelsConstants
+	  				   |_DamageAngelConstants, DarkAngelConstants,
+	  				     DraculaConstants, GoodBoyConstants, LevelUpAngel-
+	  				     Constants, LifeGiverConstants, SmallAngelConstnats,
+	  				     SpawnerConstants, XPAngelConstants.
+	  |_Angel, AngelsFactory, DamageAngel, DarkAngel, Dracula, GoodBoy,
+	    LevelUpAngel, LifeGiver, SmallAngel, Spawner, TheDoomer, XPAngel.
+
+exceptions
+		  |_InvalidAngelException, InvalidLandException, InvalidMoveException,
+		    InvalidPlayerException.
+
+main
+	|_Main
+
+observers
+		|_GrandMagician, Observers
+
+players
+	   |_PlayersConstants
+	   					|_KnightConstants, RogueConstants, PyromancerConstants,
+	   					  WizzardConstants.
+
+	   |_Hero, HeroConstants, HeroFactory, Knight, Pyromancer, Rogue, Wizard.
+
+skills
+	  |_KnightSkillsConstants
+	  						 |_ExecuteConstants, PlayersModifiers, SlamConstants
+	  |_PyromancerConstants
+	  					   |_FireblastConstants, IgniteConstants, PlayersModifiers
+	  |_RogueConstants
+	  				  |_BackStabConstants, ParalysisConstants, PlayersModifiers
+	  |_WizardConstants
+	  				   |_DeflectConstants, DrainConstants, PlayersModifiers
+	  |_KnightSkills
+
+	  |_PyromancerSkills
+
+	  |_RogueSkills
+
+	  |_WizzardSkills
+
+	  |_SkillVisitor
+
+strategies
+		  |_AttackStrategies
+		  					|_KnightAttackStrategy, PyromancerAttackStrategy,
+		  					  RogueAttackStrategy, WizardAttackStrategy.
+		  |_DefensiveStrategies
+		  					   |_HeroStrategyFactory, StrategiesConstants, Strategy.
+
+utils
+	|_Coordinates
+
+	|_LandModifiers
+
+	|_LandType
+
+	|_Map
+
+	|_Reader
+
+
+~~angels package~~
+------------------
+ - Enums with needed constants.
+ - AngelsFactory
+	 - Implementation of factory pattern for the angels.
+ - Angel class that describes an Angel from which the other 10 are going to be
+  extended.
+
+~~exceptions package~~
+----------------------
+ - Exceptions that could occur during the game.
+
+~~main package~~
+----------------
+ - Main
+   Class that implements the game logic. Here we read the data from the input
+   file, we create an instance of the map(using singleton pattern).
+
+   The methods that actually executes the game is implemented here alongside
+   the ones used for players' fights.
+
+~~players package~~
+-------------------
+ - Enums with needed constants.
+ - HeroFactory
+ 	- Implementation of factory pattern for the players.
+ - Hero class that describes a Hero from which the other 4 are going to be extended.
+
+~~skills package~~
+------------------
+ - Some enums with needed constants.
+ - Implementations of the skills each type of hero has using visitor pattern.
+
+~~strategy package~~
+--------------------
+ - Attack and Defense strategies used by the players.
+ - Factory for better usage in multithread apps.
+   Credits:
+   https://blog.e-zest.com/design-pattern-combination-strategy-with-factory-method/
+
+~~utils package~~
+-----------------
+ - Reader
+   Class that implements methods for fast input parsing.
+   It only implements parsing methods for Integers and Strings.
+ 
+ - Map
+   Singelton implementation of the game map.
+ 
+ - Coordinates
+   Class that implements a pair of coordinates.
+
+~~FEEDBACK~~
+An interesting homework that helped me to improve my git usage skills.
+May the force be with you! 
