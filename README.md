@@ -1,4 +1,5 @@
 *LABS*
+------
 - Lab01: Java Basics
 - Lab02: Constructori si referinte
 - Lab03: Agregare si mostenire
@@ -13,7 +14,9 @@
 - Lab12: Design Patterns-2
 
 *Sheriff-Of-Nottingham*
+-----------------------
 - Tema 1
 
 *League-Of-OOP*
+---------------
 - Proiect - Etapele 1 & 2
