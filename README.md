@@ -34,6 +34,17 @@
           __/ |                             
          |___/                              
 
+
+
+ _____ _            _                     _ 
+|  __ (_)          | |                   | |
+| |  \/_  __ _  ___| |     __ _ _ __   __| |
+| | __| |/ _` |/ _ \ |    / _` | '_ \ / _` |
+| |_\ \ | (_| |  __/ |___| (_| | | | | (_| |
+ \____/_|\__, |\___\_____/\__,_|_| |_|\__,_|
+          __/ |                             
+         |___/                              
+
 *Bani*
 ------
 
@@ -74,22 +85,13 @@
 		  	- dp[i][j] va fi suma numarului de moduri in care pot aseza bancnotele de pe nivelul anterior care urmeaza dupa bancnota j.
 		  	Spre exemplu, pentru j = 1 avem:
 		  		dp[i][1] = dp[i - 1][2] + dp[i - 1][3]. Analog si pentru celelalte tipuri de bancnote.
-		  
+
 		  Numarul total de moduri in care putem aseza cele n bancnote va fi dat de suma tutoror elementelor de pe linia n.
 
 		  Observam ca tot timpul ne raportam numai la nivelul anterior, fapt pentru care e suficient sa retinem doar doua linii in matrice, ceea ce ne va ajuta in obtinerea unei complexitati spatiale mai bune.
 
-		  Obtinem astfel recurenta:
-  			dp[i & 1][1] = dp[(i - 1) & 1][2] + dp[(i - 1) & 1][3];
-			dp[i & 1][2] = dp[(i - 1) & 1][1] + dp[(i - 1) & 1][4];
-			dp[i & 1][3] = dp[(i - 1) & 1][1] + dp[(i - 1) & 1][3];
-			dp[i & 1][4] = dp[(i - 1) & 1][2] + dp[(i - 1) & 1][3]
-				+ dp[(i - 1) & 1][5];
-			dp[i & 1][5] = dp[(i - 1) & 1][4] + dp[(i - 1) & 1][1];
-
-
-		  Caz de baza:
-		  	Dandu-se 2 bancnote (n = 2), in cate moduri putem aseza bancnotele incepand cu fiecare bancnota ca radacina. 
+		  Cazuri de baza:
+		  	Dandu-se 2 bancnote (n = 2), in cate moduri putem aseza bancnotele incepand cu fiecare bancnota ca radacina.
 	  		dp[0][1] = 2; -> incepem cu bancnota 10;
 			dp[0][2] = 2; -> incepem cu bancnota 50;
 			dp[0][3] = 2; -> incepem cu bancnota 100;
@@ -103,3 +105,7 @@
 			θ(n) pentru tipul 2, deoarce parcurgem toate nivelele din asa-zisul arbore.
 		- Spatiala:
 			θ(1) - retinem o matrice de 2 linii, 6 coloane.
+
+
+*Gard*
+------
