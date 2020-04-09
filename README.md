@@ -97,6 +97,7 @@
 			dp[0][5] = 2; -> incepem cu bancnota 500;
 
 	*Complexitate*
+	--------------
 		- Temporala:
 			θ(logn) pentru tipul 1, deoarece avem de calculat 2^n - 1 realizand acest lucru cu ridicarea logaritmica la putere.
 			θ(n) pentru tipul 2, deoarce parcurgem toate nivelele din asa-zisul arbore.
