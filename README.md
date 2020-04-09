@@ -52,5 +52,21 @@
 		  			 10   200  10   100	-> n = 3
 		  		  ..........................
 
-		 Aplicand acelasi rationament si pentru celelalte bancnote se obtine forumla nr_moduri_de_asezare = 5 * 2^(n - 1).
+		 Aplicand acelasi rationament si pentru celelalte bancnote se obtine formula nr_moduri_de_asezare = 5 * 2^(n - 1).
+
+- Pentru setul de instructiuni de tip 2:
+	
+	Idea
+	------
+		- Pornim de la aceeasi idee cu asezarea bancnotelor intr-un arbore. De
+		  aceasta data banconta de 200 lei va genera 3 copii, motiv pentru care numarul de frunze de pe nivelul i va depinde de nivelul anterior. -> Programare dinamica xD
+		  Fie dp[i][j] -> numarul de moduri in care pot aseza i bancnote avand bancnota j ca radacina.
+
+		  Asociem urmatoarele:
+
+		  	- Pentru j = 1: 10 lei.
+		  	- Pentru j = 2: 50 lei.
+		  	- Pentru j = 3: 100 lei.
+		  	- Pentru j = 4: 200 lei.
+		  	- Pentru j = 5: 500 lei.
  
