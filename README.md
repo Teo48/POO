@@ -36,11 +36,9 @@
 
 *Bani*
 ------
-
-- Pentru setul de instructiuni de tip 1:
-
 	Idea
 	------
+	- Pentru setul de instructiuni de tip 1:
 		- Consideram fiecare tip de bancnota ca fiind radacina unui arbore.
 		  Copii sai vor fi tipurile de banconte care urmeaza. Numarul de moduri in care pot aranja n bancnote incepand cu bancnota X va fi chiar numarul de frunze din arbore, care este 2^(n - 1), considerand ca radacina se afla pe nivelul 1 (adica am o singura bancnota de aranjat).
 
