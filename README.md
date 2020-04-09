@@ -108,7 +108,8 @@
 
 
 *Gard*
---
+------
+
 	Ideea
 	------
     	- Sortam intervalele crescator dupa capatul din stanga, iar in caz de
@@ -117,7 +118,7 @@
     	  Parcurgem intervalele sortate si le numaram pe cele care nu se suprapun. Numarul de garduri redundante va fi dat de diferenta dintre numarul total de intervale si cele care nu se suprapun.
 
    	*Complexitate*
-	--
+	--------------
 
 		- Temporala:
 			θ(nlogn) pentru sortare + θ(n) pentru parcurgere => θ(nlogn).
