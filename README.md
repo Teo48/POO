@@ -23,6 +23,8 @@
 
 
 
+
+
  _____ _            _                     _ 
 |  __ (_)          | |                   | |
 | |  \/_  __ _  ___| |     __ _ _ __   __| |
@@ -36,7 +38,7 @@
 ------
 
 - Pentru setul de instructiuni de tip 1:
-	*Idea*
-	------
+*Idea*
+------
 		- Consideram fiecare tip de banconta ca fiind radacina unui arbore.
 		  Copii sai vor fi tipurile de banconte care urmeaza.
