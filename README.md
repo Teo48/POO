@@ -39,7 +39,7 @@
 
 - Pentru setul de instructiuni de tip 1:
 
-	Idea
+	Ideea
 	------
 		- Consideram fiecare tip de bancnota ca fiind radacina unui arbore.
 		  Copii sai vor fi tipurile de banconte care urmeaza. Numarul de moduri in care pot aranja n bancnote incepand cu bancnota X va fi chiar numarul de frunze din arbore, care este 2^(n - 1), considerand ca radacina se afla pe nivelul 1 (adica am o singura bancnota de aranjat).
@@ -56,7 +56,7 @@
 
 - Pentru setul de instructiuni de tip 2:
 	
-	Idea
+	Ideea
 	------
 		- Pornim de la aceeasi idee cu asezarea bancnotelor intr-un arbore. De
 		  aceasta data banconta de 200 lei va genera 3 copii, motiv pentru care numarul de frunze de pe nivelul i va depinde de nivelul anterior. -> Programare dinamica xD
@@ -69,4 +69,36 @@
 		  	- Pentru j = 3: 100 lei.
 		  	- Pentru j = 4: 200 lei.
 		  	- Pentru j = 5: 500 lei.
- 
+
+		  Atunci:
+		  	- dp[i][j] va fi suma numarului de moduri in care pot aseza bancnotele de pe nivelul anterior care urmeaza dupa bancnota j.
+		  	Spre exemplu, pentru j = 1 avem:
+		  		dp[i][1] = dp[i - 1][2] + dp[i - 1][3]. Analog si pentru celelalte tipuri de bancnote.
+		  
+		  Numarul total de moduri in care putem aseza cele n bancnote va fi dat de suma tutoror elementelor de pe linia n.
+
+		  Observam ca tot timpul ne raportam numai la nivelul anterior, fapt pentru care e suficient sa retinem doar doua linii in matrice, ceea ce ne va ajuta in obtinerea unei complexitati spatiale mai bune.
+
+		  Obtinem astfel recurenta:
+  			dp[i & 1][1] = dp[(i - 1) & 1][2] + dp[(i - 1) & 1][3];
+			dp[i & 1][2] = dp[(i - 1) & 1][1] + dp[(i - 1) & 1][4];
+			dp[i & 1][3] = dp[(i - 1) & 1][1] + dp[(i - 1) & 1][3];
+			dp[i & 1][4] = dp[(i - 1) & 1][2] + dp[(i - 1) & 1][3]
+				+ dp[(i - 1) & 1][5];
+			dp[i & 1][5] = dp[(i - 1) & 1][4] + dp[(i - 1) & 1][1];
+
+
+		  Caz de baza:
+		  	Dandu-se 2 bancnote (n = 2), in cate moduri putem aseza bancnotele incepand cu fiecare bancnota ca radacina. 
+	  		dp[0][1] = 2; -> incepem cu bancnota 10;
+			dp[0][2] = 2; -> incepem cu bancnota 50;
+			dp[0][3] = 2; -> incepem cu bancnota 100;
+			dp[0][4] = 3; -> incepem cu bancnota 200;
+			dp[0][5] = 2; -> incepem cu bancnota 500;
+
+	*Complexitate*
+		- Temporala:
+			θ(logn) pentru tipul 1, deoarece avem de calculat 2^n - 1 realizand acest lucru cu ridicarea logaritmica la putere.
+			θ(n) pentru tipul 2, deoarce parcurgem toate nivelele din asa-zisul arbore.
+		- Spatiala:
+			θ(1) - retinem o matrice de 2 linii, 6 coloane.
