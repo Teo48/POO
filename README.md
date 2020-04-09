@@ -21,32 +21,6 @@
 ---------------
 - Proiect - Etapele 1 & 2
 
-
-
-
-
- _____ _            _                     _ 
-|  __ (_)          | |                   | |
-| |  \/_  __ _  ___| |     __ _ _ __   __| |
-| | __| |/ _` |/ _ \ |    / _` | '_ \ / _` |
-| |_\ \ | (_| |  __/ |___| (_| | | | | (_| |
- \____/_|\__, |\___\_____/\__,_|_| |_|\__,_|
-          __/ |                             
-         |___/                              
-
-
-
-
-
- _____ _            _                     _ 
-|  __ (_)          | |                   | |
-| |  \/_  __ _  ___| |     __ _ _ __   __| |
-| | __| |/ _` |/ _ \ |    / _` | '_ \ / _` |
-| |_\ \ | (_| |  __/ |___| (_| | | | | (_| |
- \____/_|\__, |\___\_____/\__,_|_| |_|\__,_|
-          __/ |                             
-         |___/                              
-
 *Bani*
 ------
 
@@ -115,15 +89,63 @@
 	Ideea
 	------
 
-    	- Sortam intervalele crescator dupa capatul din stanga, iar in caz de
-    	  egalitate le sortam crescator dupa capatul din dreapta.
+    	- Aplicam o abordare greedy si ortam intervalele crescator dupa
+    	  capatul din stanga, iar in caz de egalitate le sortam crescator dupa capatul din dreapta.
 
     	  Parcurgem intervalele sortate si le numaram pe cele care nu se suprapun. Numarul de garduri redundante va fi dat de diferenta dintre numarul total de intervale si cele care nu se suprapun.
 
-   	*Complexitate*
+-	*Complexitate*
 	--------------
 
 		- Temporala:
-		θ(nlogn) pentru sortare + θ(n) pentru parcurgere => θ(nlogn).
+			θ(nlogn) pentru sortare + θ(n) pentru parcurgere => θ(nlogn).
 		- Spatiala:
 			θ(n) - retinem un array de n perechi de intervale.
+
+*Bomboane*
+----------
+-
+	Ideea
+	------
+		- Am utilizat metoda programarii dinamice. Fie dp[i][j] -> numarul de moduri in care pot da j bomboane la i copii.
+
+		- Caz de baza:
+			dp[1][p] = 1, unde p ia valori de la numarul minim de probleme rezolvate de primul copil pana minimul dintre numarul maxim de probleme rezolvate de acesta si numarul maxim de bomboane pe care-l avem. Astfel, unui singur copil, pot da p bomboane intr-un singur mod.
+
+		- Relatia de recurenta:
+			dp[i][j] = Σ(k) din dp[i][j] + dp[i - 1][j - k] (In cate moduri pot da cele j bomboane, daca ii dau copilului i, k bomboane), unde k ia valori de la numarul minim de probleme rezolvate de al i-lea copil pana la minimul dintre numarul maxim de probleme rezolvate de acesta si j(Nu pot sa-i dau unui copil mai multe bomboane decat am.).
+
+		  Asemanator ca la problema 1, observam ca mereu depindem doar de linia anterioara, fapt pentru care vom retine in memorie doar doua linii pentru a obtine o complexitate spatiala mai buna.
+
+-	*Complexitate*
+	--------------
+
+		- Temporala:
+			θ(n * m * k), unde n este numarul de copii, m numarul de bomboane, iar k numarul maxim de bomboane pe care-l pot da fiecarui copil.
+		- Spatiala:
+			θ(m) - retinem o matrice de 2 linii si m + 1 coloane.
+
+*Sala*
+----------
+-
+	Ideea
+	------
+		- Aplicam o abordare greedy si retinem intr-o coada de
+		  priorati perechea <gantera, repertare> ordonata descrescator dupa greutate, iar in caz de greutati egale, ordonata descrescator dupa numarul de repetari.
+
+		  Extragem pe rand fiecare pereche din coada de prioritati si adaugam primele m - 1 repetari intr-o  alta coada de prioritati. Vom elimina din coada de prioritati prima repetare in momentul in care gasim una mai buna care ne permite sa maximizam valoarea cu care Gigel isi va creste muschii.
+
+-	*Complexitate*
+	--------------
+
+		- Temporala:
+			θ(nlogn) pentru construirea cozii de prioritate + θ(n) pentru a parcurge cele n perechi <gantera, repetare> => θ(nlogn).
+		- Spatiala:
+			θ(n) coada de prioritati cu perechile <gantera, repetare> + θ(m)
+			pentru coada de prioritati ce retine repetarile => θ(n + m).
+
+*FEEDBACK*
+---------
+
+SHOW MUST GO ON! May the 4th be with you!
+
