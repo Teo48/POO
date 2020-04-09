@@ -38,6 +38,7 @@
 ------
 
 - Pentru setul de instructiuni de tip 1:
+
 Idea
 ------
 		- Consideram fiecare tip de banconta ca fiind radacina unui arbore.
