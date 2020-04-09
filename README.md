@@ -109,7 +109,6 @@
 
 *Gard*
 ------
-
 	Ideea
 	------
     	- Sortam intervalele crescator dupa capatul din stanga, iar in caz de
