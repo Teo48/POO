@@ -109,17 +109,20 @@
 
 *Gard*
 ------
-	Ideea
-	------
-    	- Sortam intervalele crescator dupa capatul din stanga, iar in caz de
-    	  egalitate le sortam crescator dupa capatul din dreapta.
 
-    	  Parcurgem intervalele sortate si le numaram pe cele care nu se suprapun. Numarul de garduri redundante va fi dat de diferenta dintre numarul total de intervale si cele care nu se suprapun.
+Ideea
+------
+- Sortam intervalele crescator dupa capatul din stanga, iar in caz de
+  egalitate le sortam crescator dupa capatul din dreapta.
 
-   	*Complexitate*
-	--------------
+  Parcurgem intervalele sortate si le numaram pe cele care nu se suprapun. Numarul de garduri redundante va fi dat de diferenta dintre numarul total de intervale si cele care nu se suprapun.
 
-		- Temporala:
-			θ(nlogn) pentru sortare + θ(n) pentru parcurgere => θ(nlogn).
-		- Spatiala:
+*Complexitate*
+--------------
+
+- Temporala:
+	θ(nlogn) pentru sortare + θ(n) pentru parcurgere => θ(nlogn).
+- Spatiala:
+	θ(n) - retinem un array de n perechi de intervale.
+
 			θ(n) - retinem un array de n perechi de intervale.
