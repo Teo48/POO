@@ -53,3 +53,4 @@
 		  		  ..........................
 
 		 Aplicand acelasi rationament si pentru celelalte bancnote se obtine forumla nr_moduri_de_asezare = 5 * 2^(n - 1).
+ 
